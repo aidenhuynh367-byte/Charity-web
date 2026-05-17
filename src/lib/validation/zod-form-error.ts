@@ -2,7 +2,7 @@ import type { ZodError } from "zod";
 
 const FIELD_TITLES: Record<string, string> = {
   organizationName: "Organization name",
-  address: "Google Maps link",
+  address: "Address",
   displayName: "Name",
   phoneCountry: "Phone number",
   phoneNationalNumber: "Phone number",

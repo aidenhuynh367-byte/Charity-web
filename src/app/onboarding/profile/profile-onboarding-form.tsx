@@ -113,18 +113,11 @@ export function ProfileOnboardingForm({ role, initial }: Props) {
           name="organizationName"
           defaultValue={initial.organizationName ?? ""}
         />
-        <div className="space-y-1">
-          <Field
-            label="Google Maps link"
-            name="address"
-            type="url"
-            defaultValue={initial.address ?? ""}
-          />
-          <p className="text-xs text-slate-600">
-            Paste the link from Google Maps (Share → Copy link). No search or
-            autocomplete runs in this field.
-          </p>
-        </div>
+        <Field
+          label="Address"
+          name="address"
+          defaultValue={initial.address ?? ""}
+        />
         <PhoneCountryFields
           label="Phone number"
           countryFieldName="phoneCountry"

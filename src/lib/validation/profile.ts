@@ -4,38 +4,13 @@ export const roleSchema = z.object({
   role: z.enum(["CHARITY_ORGANIZATION", "CONTRIBUTOR"]),
 });
 
-function isAllowedGoogleMapsHost(hostname: string): boolean {
-  const h = hostname.toLowerCase();
-  return (
-    h === "maps.google.com" ||
-    h === "www.google.com" ||
-    h === "google.com" ||
-    h === "goo.gl" ||
-    h === "maps.app.goo.gl" ||
-    h.endsWith(".google.com") ||
-    h.endsWith(".goo.gl")
-  );
-}
-
-/** Charity `address` stores a Google Maps share URL (paste from Share → Copy link). */
-function charityGoogleMapsUrlSchema() {
+/** Charity organization street / mailing address (free text). */
+function charityAddressSchema() {
   return z
     .string()
     .trim()
-    .min(1, "Google Maps link is required.")
-    .max(2048)
-    .refine(
-      (val) => {
-        try {
-          const u = new URL(val);
-          if (u.protocol !== "https:" && u.protocol !== "http:") return false;
-          return isAllowedGoogleMapsHost(u.hostname);
-        } catch {
-          return false;
-        }
-      },
-      { message: "Must be a valid Google Maps link (Share → Copy link)." },
-    );
+    .min(5, "Address is required.")
+    .max(500, "Address must be at most 500 characters.");
 }
 
 /** National subscriber part: digits only, at least 5. */
@@ -67,7 +42,7 @@ export function alphanumericNameSchema() {
 
 export const charityProfileSchema = z.object({
   organizationName: alphanumericNameSchema(),
-  address: charityGoogleMapsUrlSchema(),
+  address: charityAddressSchema(),
   phoneCountry: z
     .string()
     .trim()

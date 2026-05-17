@@ -48,7 +48,7 @@ export default async function LoginPage({
     <div className="mx-auto flex min-h-screen max-w-md flex-col justify-center px-4">
       <h1 className="text-2xl font-bold text-slate-900">Sign in</h1>
       <p className="mt-2 text-sm text-slate-600">
-        Use Microsoft, Facebook, Google, or Instagram. After signing in you will
+        Use Microsoft or Google. After signing in you will
         choose whether you are a charity organization or a contributor, then
         complete your profile.
       </p>

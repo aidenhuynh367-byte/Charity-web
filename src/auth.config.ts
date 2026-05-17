@@ -2,54 +2,7 @@ import type { NextAuthConfig } from "next-auth";
 import { NextResponse } from "next/server";
 
 import Google from "next-auth/providers/google";
-import Facebook from "next-auth/providers/facebook";
 import AzureAD from "next-auth/providers/azure-ad";
-import Instagram from "next-auth/providers/instagram";
-
-/** Instagram Basic Display (deprecated) used api.instagram.com; current Meta apps use www + business scopes. */
-const instagramOAuthLegacy =
-  process.env.INSTAGRAM_OAUTH_LEGACY === "1" ||
-  process.env.INSTAGRAM_OAUTH_LEGACY === "true";
-
-function instagramAuthorizeScopes(): string {
-  const fromEnv = process.env.INSTAGRAM_SCOPES?.trim();
-  if (fromEnv) return fromEnv;
-  return instagramOAuthLegacy
-    ? "user_profile,user_media"
-    : "instagram_business_basic";
-}
-
-/**
- * “Instagram API with Instagram Login” returns token JSON as `{ data: [{ access_token, user_id }] }`.
- * Auth.js expects a flat OAuth2 token body; normalize when present.
- */
-async function instagramTokenConform(response: Response): Promise<Response> {
-  try {
-    const json: unknown = await response.clone().json();
-    if (
-      json &&
-      typeof json === "object" &&
-      "data" in json &&
-      Array.isArray((json as { data: unknown }).data)
-    ) {
-      const row = (json as { data: Array<Record<string, unknown>> }).data[0];
-      if (row && typeof row.access_token === "string") {
-        const payload: Record<string, unknown> = {
-          access_token: row.access_token,
-          token_type: "bearer",
-        };
-        if (row.user_id != null) payload.user_id = row.user_id;
-        return new Response(JSON.stringify(payload), {
-          status: response.status,
-          headers: { "Content-Type": "application/json" },
-        });
-      }
-    }
-  } catch {
-    return response;
-  }
-  return response;
-}
 
 function providers() {
   const list: NextAuthConfig["providers"] = [];
@@ -59,15 +12,6 @@ function providers() {
       Google({
         clientId: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      }),
-    );
-  }
-
-  if (process.env.FACEBOOK_CLIENT_ID && process.env.FACEBOOK_CLIENT_SECRET) {
-    list.push(
-      Facebook({
-        clientId: process.env.FACEBOOK_CLIENT_ID,
-        clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
       }),
     );
   }
@@ -106,33 +50,6 @@ function providers() {
     );
   }
 
-  if (process.env.INSTAGRAM_CLIENT_ID && process.env.INSTAGRAM_CLIENT_SECRET) {
-    list.push(
-      Instagram({
-        clientId: process.env.INSTAGRAM_CLIENT_ID,
-        clientSecret: process.env.INSTAGRAM_CLIENT_SECRET,
-        /** Instagram OAuth rejects PKCE; Auth.js defaults to `["pkce"]`. */
-        checks: ["state"],
-        authorization: {
-          url: instagramOAuthLegacy
-            ? "https://api.instagram.com/oauth/authorize"
-            : "https://www.instagram.com/oauth/authorize",
-          params: {
-            response_type: "code",
-            scope: instagramAuthorizeScopes(),
-            ...(instagramOAuthLegacy
-              ? {}
-              : { enable_fb_login: "false" }),
-          },
-        },
-        token: {
-          url: "https://api.instagram.com/oauth/access_token",
-          conform: instagramTokenConform,
-        },
-      }),
-    );
-  }
-
   return list;
 }
 
@@ -142,18 +59,12 @@ export function getConfiguredProviderIds(): string[] {
   if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
     ids.push("google");
   }
-  if (process.env.FACEBOOK_CLIENT_ID && process.env.FACEBOOK_CLIENT_SECRET) {
-    ids.push("facebook");
-  }
   if (
     process.env.AZURE_AD_CLIENT_ID &&
     process.env.AZURE_AD_CLIENT_SECRET &&
     process.env.AZURE_AD_TENANT_ID
   ) {
     ids.push("azure-ad");
-  }
-  if (process.env.INSTAGRAM_CLIENT_ID && process.env.INSTAGRAM_CLIENT_SECRET) {
-    ids.push("instagram");
   }
   return ids;
 }

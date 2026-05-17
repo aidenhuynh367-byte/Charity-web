@@ -3,12 +3,7 @@
 import { signIn } from "@/auth";
 import { getConfiguredProviderIds } from "@/auth.config";
 
-const allowedProviders = new Set([
-  "google",
-  "facebook",
-  "azure-ad",
-  "instagram",
-]);
+const allowedProviders = new Set(["google", "azure-ad"]);
 
 export async function loginWith(provider: string) {
   if (!allowedProviders.has(provider)) {

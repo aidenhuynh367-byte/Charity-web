@@ -2,7 +2,6 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { Role } from "@prisma/client";
 
-import { FcmTokenRegistrar } from "@/components/fcm-token-registrar";
 import { requireUserId, getOrCreateProfile } from "@/lib/auth-server";
 
 /**
@@ -48,7 +47,6 @@ export default async function MainLayout({
           </Link>
         </nav>
       </header>
-      <FcmTokenRegistrar userId={userId} />
       {children}
     </div>
   );
