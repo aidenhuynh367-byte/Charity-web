@@ -1,0 +1,22 @@
+# AWS Amplify Hosting — Next.js + Prisma (charity-web)
+# Console: https://console.aws.amazon.com/amplify/
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - npm ci
+    build:
+      commands:
+        # Schema must be in repo; DATABASE_URL not required for generate
+        - npx prisma generate
+        - npm run build
+        # Optional: only if RDS allows SSL from Amplify build IPs (often skip; run migrate from CI/your machine)
+        # - npx prisma migrate deploy
+  artifacts:
+    baseDirectory: .next
+    files:
+      - "**/*"
+  cache:
+    paths:
+      - node_modules/**/*
