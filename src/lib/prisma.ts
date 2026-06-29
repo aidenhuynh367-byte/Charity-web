@@ -9,4 +9,5 @@ export const prisma =
       process.env.NODE_ENV === "development" ? ["query", "error", "warn"] : ["error"],
   });
 
-if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
+// Reuse one client per Cloud Run instance (avoids connection storms on App Hosting).
+globalForPrisma.prisma = prisma;

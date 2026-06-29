@@ -33,6 +33,11 @@ yarn-error.log*
 # env files
 .env
 .env*.local
+.env.swp
+
+# local agent/cursor artifacts
+.agents/
+skills-lock.json
 
 # typescript
 *.tsbuildinfo

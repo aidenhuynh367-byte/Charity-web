@@ -1,0 +1,86 @@
+# Firebase App Hosting — charity-web (Next.js + Cloud SQL PostgreSQL)
+# Backend: charity-link-backend (asia-southeast1)
+# Cloud SQL (cross-project): project-3735bbba-0864-4d45-a7a / free-trial-first-project
+#   Region: asia-southeast2 | Database: charityweb | User: postgres
+#
+# Cross-project IAM: grant Cloud SQL Client on project-3735bbba-0864-4d45-a7a to:
+#   firebase-app-hosting-compute@charity-link-f61ff.iam.gserviceaccount.com
+
+cloudSqlInstances:
+  - project-3735bbba-0864-4d45-a7a:asia-southeast2:free-trial-first-project
+
+runConfig:
+  minInstances: 1
+  maxInstances: 10
+  concurrency: 80
+  cpu: 1
+  memoryMiB: 1024
+
+env:
+  - variable: NODE_ENV
+    value: production
+    availability:
+      - BUILD
+      - RUNTIME
+
+  - variable: AUTH_URL
+    value: https://charity-link-backend--charity-link-f61ff.asia-southeast1.hosted.app
+    availability:
+      - BUILD
+      - RUNTIME
+
+  - variable: GCS_UPLOAD_BUCKET
+    value: charity-link-f61ff-uploads
+    availability:
+      - RUNTIME
+
+  - variable: DATABASE_URL
+    secret: charityWebDatabaseUrl
+    availability:
+      - RUNTIME
+
+  - variable: AUTH_SECRET
+    secret: charityWebAuthSecret
+    availability:
+      - BUILD
+      - RUNTIME
+
+  - variable: GOOGLE_CLIENT_ID
+    secret: charityWebGoogleClientId
+    availability:
+      - BUILD
+      - RUNTIME
+
+  - variable: GOOGLE_CLIENT_SECRET
+    secret: charityWebGoogleClientSecret
+    availability:
+      - BUILD
+      - RUNTIME
+
+  - variable: AZURE_AD_CLIENT_ID
+    secret: charityWebAzureAdClientId
+    availability:
+      - BUILD
+      - RUNTIME
+
+  - variable: AZURE_AD_CLIENT_SECRET
+    secret: charityWebAzureAdClientSecret
+    availability:
+      - BUILD
+      - RUNTIME
+
+  - variable: AZURE_AD_TENANT_ID
+    secret: charityWebAzureAdTenantId
+    availability:
+      - BUILD
+      - RUNTIME
+
+  - variable: WASENDER_WHATSAPP_SESSION_ID
+    secret: charityWebWasenderSessionId
+    availability:
+      - RUNTIME
+
+  - variable: WASENDER_API_KEY
+    secret: charityWebWasenderApiKey
+    availability:
+      - RUNTIME
