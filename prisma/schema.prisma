@@ -94,6 +94,7 @@ model Profile {
   charityEmail           String?
   /// Contributor display name
   displayName            String?
+  contributorLocation    String?
   contributorWhatsappCountry         String?
   contributorWhatsappNationalNumber String?
   onboardingCompletedAt  DateTime?

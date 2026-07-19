@@ -4,6 +4,7 @@ import type { Profile, Role } from "@prisma/client";
 import { useActionState, useEffect, useState, useTransition } from "react";
 
 import { updateProfileAction, type FormState } from "@/app/actions/profile";
+import { ContributorLocationField } from "@/components/contributor-location-field";
 import { PhoneCountryFields } from "@/components/phone-country-fields";
 import { formText } from "@/lib/form-text";
 import {
@@ -58,6 +59,7 @@ export function ProfileEditForm({ role, initial }: Props) {
     } else {
       const parsed = contributorProfileSchema.safeParse({
         displayName: formText(fd, "displayName"),
+        contributorLocation: formText(fd, "contributorLocation"),
         contributorWhatsappCountry: formText(
           fd,
           "contributorWhatsappCountry",
@@ -153,6 +155,7 @@ export function ProfileEditForm({ role, initial }: Props) {
         name="displayName"
         defaultValue={initial.displayName ?? ""}
       />
+      <ContributorLocationField defaultValue={initial.contributorLocation} />
       <PhoneCountryFields
         label="WhatsApp number"
         countryFieldName="contributorWhatsappCountry"

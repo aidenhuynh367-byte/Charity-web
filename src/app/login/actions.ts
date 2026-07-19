@@ -5,9 +5,15 @@ import { getConfiguredProviderIds } from "@/auth.config";
 
 const allowedProviders = new Set(["google", "azure-ad"]);
 
-export async function loginWith(provider: string) {
+export async function loginWith(provider: string, formData: FormData) {
   if (!allowedProviders.has(provider)) {
     throw new Error("Unknown sign-in provider.");
+  }
+  if (
+    provider === "azure-ad" &&
+    formData.get("showMSLogin") !== "Yes"
+  ) {
+    throw new Error("Microsoft sign-in is not available.");
   }
   if (!getConfiguredProviderIds().includes(provider)) {
     throw new Error(

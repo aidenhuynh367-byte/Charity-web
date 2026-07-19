@@ -28,6 +28,7 @@ export default async function LoginPage({
   const params = await searchParams;
   const errorCode = typeof params.error === "string" ? params.error : undefined;
   const noticeCode = typeof params.notice === "string" ? params.notice : undefined;
+  const showMicrosoftLogin = params.showMSLogin === "Yes";
 
   const session = await auth();
 
@@ -48,9 +49,9 @@ export default async function LoginPage({
     <div className="mx-auto flex min-h-screen max-w-md flex-col justify-center px-4">
       <h1 className="text-2xl font-bold text-slate-900">Sign in</h1>
       <p className="mt-2 text-sm text-slate-600">
-        Use Microsoft or Google. After signing in you will
-        choose whether you are a charity organization or a contributor, then
-        complete your profile.
+        {showMicrosoftLogin
+          ? "Use Microsoft or Google. After signing in you will choose whether you are a charity organization or a contributor, then complete your profile."
+          : "Use Google to sign in. After signing in you will choose whether you are a charity organization or a contributor, then complete your profile."}
       </p>
       {errorBanner ? (
         <p className="mt-6 rounded border border-red-200 bg-red-50 p-4 text-sm text-red-900">
@@ -65,7 +66,7 @@ export default async function LoginPage({
           one provider&apos;s client ID and secret.
         </p>
       ) : (
-        <LoginButtons />
+        <LoginButtons showMicrosoftLogin={showMicrosoftLogin} />
       )}
     </div>
   );

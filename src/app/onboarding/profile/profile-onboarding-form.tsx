@@ -13,6 +13,7 @@ import {
   completeOnboardingProfileAction,
   type FormState,
 } from "@/app/actions/profile";
+import { ContributorLocationField } from "@/components/contributor-location-field";
 import { PhoneCountryFields } from "@/components/phone-country-fields";
 import { formText } from "@/lib/form-text";
 import {
@@ -31,6 +32,7 @@ type ProfileOnboardingSnapshot = {
   charityWhatsappNationalNumber: string | null;
   charityEmail: string | null;
   displayName: string | null;
+  contributorLocation: string | null;
   contributorWhatsappCountry: string | null;
   contributorWhatsappNationalNumber: string | null;
 };
@@ -77,6 +79,7 @@ export function ProfileOnboardingForm({ role, initial }: Props) {
     } else {
       const parsed = contributorProfileSchema.safeParse({
         displayName: formText(fd, "displayName"),
+        contributorLocation: formText(fd, "contributorLocation"),
         contributorWhatsappCountry: formText(
           fd,
           "contributorWhatsappCountry",
@@ -162,6 +165,7 @@ export function ProfileOnboardingForm({ role, initial }: Props) {
         name="displayName"
         defaultValue={initial.displayName ?? ""}
       />
+      <ContributorLocationField defaultValue={initial.contributorLocation} />
       <PhoneCountryFields
         label="WhatsApp number"
         countryFieldName="contributorWhatsappCountry"

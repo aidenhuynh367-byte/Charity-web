@@ -2,7 +2,11 @@
 
 import { loginWith } from "./actions";
 
-export function LoginButtons() {
+type LoginButtonsProps = {
+  showMicrosoftLogin: boolean;
+};
+
+export function LoginButtons({ showMicrosoftLogin }: LoginButtonsProps) {
   return (
     <ul className="mt-8 flex flex-col gap-3">
       <li>
@@ -15,16 +19,19 @@ export function LoginButtons() {
           </button>
         </form>
       </li>
-      <li>
-        <form action={loginWith.bind(null, "azure-ad")}>
-          <button
-            type="submit"
-            className="w-full rounded-lg border border-slate-300 bg-white px-4 py-3 text-sm font-medium text-slate-900 hover:bg-slate-50"
-          >
-            Continue with Microsoft
-          </button>
-        </form>
-      </li>
+      {showMicrosoftLogin ? (
+        <li>
+          <form action={loginWith.bind(null, "azure-ad")}>
+            <input type="hidden" name="showMSLogin" value="Yes" />
+            <button
+              type="submit"
+              className="w-full rounded-lg border border-slate-300 bg-white px-4 py-3 text-sm font-medium text-slate-900 hover:bg-slate-50"
+            >
+              Continue with Microsoft
+            </button>
+          </form>
+        </li>
+      ) : null}
     </ul>
   );
 }

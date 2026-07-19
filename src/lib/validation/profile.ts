@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+import { CONTRIBUTOR_LOCATIONS } from "@/lib/contributor-locations";
+
 export const roleSchema = z.object({
   role: z.enum(["CHARITY_ORGANIZATION", "CONTRIBUTOR"]),
 });
@@ -65,6 +67,9 @@ export const charityProfileSchema = z.object({
 
 export const contributorProfileSchema = z.object({
   displayName: alphanumericNameSchema(),
+  contributorLocation: z.enum(CONTRIBUTOR_LOCATIONS, {
+    errorMap: () => ({ message: "Please select a location." }),
+  }),
   contributorWhatsappCountry: z
     .string()
     .trim()

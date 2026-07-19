@@ -82,6 +82,7 @@ export async function completeOnboardingProfileAction(
         charityWhatsappNationalNumber: parsed.data.charityWhatsappNationalNumber,
         charityEmail: parsed.data.charityEmail,
         displayName: null,
+        contributorLocation: null,
         contributorWhatsappCountry: null,
         contributorWhatsappNationalNumber: null,
         onboardingCompletedAt: now,
@@ -90,6 +91,7 @@ export async function completeOnboardingProfileAction(
   } else {
     const parsed = contributorProfileSchema.safeParse({
       displayName: formText(formData, "displayName"),
+      contributorLocation: formText(formData, "contributorLocation"),
       contributorWhatsappCountry: formText(
         formData,
         "contributorWhatsappCountry",
@@ -105,6 +107,7 @@ export async function completeOnboardingProfileAction(
       where: { userId },
       data: {
         displayName: parsed.data.displayName,
+        contributorLocation: parsed.data.contributorLocation,
         contributorWhatsappCountry: parsed.data.contributorWhatsappCountry,
         contributorWhatsappNationalNumber:
           parsed.data.contributorWhatsappNationalNumber,
@@ -163,6 +166,7 @@ export async function updateProfileAction(
         charityWhatsappNationalNumber: parsed.data.charityWhatsappNationalNumber,
         charityEmail: parsed.data.charityEmail,
         displayName: null,
+        contributorLocation: null,
         contributorWhatsappCountry: null,
         contributorWhatsappNationalNumber: null,
       },
@@ -170,6 +174,7 @@ export async function updateProfileAction(
   } else {
     const parsed = contributorProfileSchema.safeParse({
       displayName: formText(formData, "displayName"),
+      contributorLocation: formText(formData, "contributorLocation"),
       contributorWhatsappCountry: formText(
         formData,
         "contributorWhatsappCountry",
@@ -185,6 +190,7 @@ export async function updateProfileAction(
       where: { userId },
       data: {
         displayName: parsed.data.displayName,
+        contributorLocation: parsed.data.contributorLocation,
         contributorWhatsappCountry: parsed.data.contributorWhatsappCountry,
         contributorWhatsappNationalNumber:
           parsed.data.contributorWhatsappNationalNumber,

@@ -23,7 +23,7 @@ export default async function OnboardingProfilePage() {
       <p className="mt-2 text-sm text-slate-600">
         {profile.role === Role.CHARITY_ORGANIZATION
           ? "Enter your organization details."
-          : "Enter your name and WhatsApp number."}
+          : "Enter your name, location, and WhatsApp number."}
       </p>
       <ProfileOnboardingForm role={profile.role} initial={profile} />
     </div>
