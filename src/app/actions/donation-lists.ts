@@ -7,6 +7,7 @@ import { redirect } from "next/navigation";
 import { appPublicOrigin } from "@/lib/app-public-url";
 import { requireContributor } from "@/lib/auth-server";
 import { contributorLabel } from "@/lib/contributor-label";
+import { routedCharityLocationForContributor } from "@/lib/donation-list-routing";
 import { prisma } from "@/lib/prisma";
 import { profileWhatsappToE164 } from "@/lib/profile-whatsapp-e164";
 import { sendWasenderTextMessage } from "@/lib/wasender";
@@ -76,59 +77,82 @@ export async function deleteDonationList(formData: FormData) {
 
 export async function submitDonationList(formData: FormData) {
   const { userId } = await requireContributor();
-  const id = formData.get("id");
-  if (typeof id !== "string" || !id) {
+
+  const listId = formData.get("id");
+  // Guard: Prisma ignores `undefined` in `where`, which would widen the update.
+  if (typeof listId !== "string" || listId.length < 1) {
     throw new Error("Missing list id.");
   }
 
+  const contributorUser = await prisma.user.findUnique({
+    where: { id: userId },
+    include: { profile: true },
+  });
+  const contributorLocation =
+    contributorUser?.profile?.contributorLocation ?? null;
+  const targetCharityLocation =
+    routedCharityLocationForContributor(contributorLocation);
+
+  const filterIds = parseNotifyCharityUserIds();
+  const selectedCharity = await prisma.profile.findFirst({
+    where: {
+      role: Role.CHARITY_ORGANIZATION,
+      charityLocation: targetCharityLocation,
+      ...(filterIds?.length ? { userId: { in: filterIds } } : {}),
+    },
+    orderBy: { userId: "asc" },
+  });
+  if (!selectedCharity) {
+    throw new Error(
+      `No charity organization found for location "${targetCharityLocation}".`,
+    );
+  }
+
+  // Atomic update of exactly one row: this id, this contributor, still not submitted.
   const updated = await prisma.donationList.updateMany({
     where: {
-      id,
-      contributorId: userId,
-      status: DonationListStatus.NOT_SUBMITTED,
+      AND: [
+        { id: listId },
+        { contributorId: userId },
+        { status: DonationListStatus.NOT_SUBMITTED },
+      ],
     },
-    data: { status: DonationListStatus.SUBMITTED },
+    data: {
+      status: DonationListStatus.SUBMITTED,
+      charityId: selectedCharity.userId,
+    },
   });
-  if (updated.count === 0) {
+  if (updated.count !== 1) {
     throw new Error(
       "List not found, already submitted, or you do not have access.",
     );
   }
 
+  const list = await prisma.donationList.findFirst({
+    where: {
+      id: listId,
+      contributorId: userId,
+      status: DonationListStatus.SUBMITTED,
+      charityId: selectedCharity.userId,
+    },
+  });
+  if (!list) {
+    throw new Error("Submitted list could not be loaded.");
+  }
+
   try {
-    const contributorUser = await prisma.user.findUnique({
-      where: { id: userId },
-      include: { profile: true },
-    });
     const contributorName = contributorUser
       ? contributorLabel(contributorUser)
       : "Contributor";
     const baseUrl = appPublicOrigin();
-    const text = `${contributorName} has sent a donation list for your review, please check your account ${baseUrl}`;
+    const listUrl = `${baseUrl}/master-donation-lists/${list.id}`;
+    const text = `${contributorName} has sent donation list "${list.name}" for your review: ${listUrl}`;
 
-    const filterIds = parseNotifyCharityUserIds();
-    const charityProfiles = await prisma.profile.findMany({
-      where: {
-        role: Role.CHARITY_ORGANIZATION,
-        charityWhatsappCountry: { not: null },
-        charityWhatsappNationalNumber: { not: null },
-        ...(filterIds?.length ? { userId: { in: filterIds } } : {}),
-      },
-    });
-
-    const seenE164 = new Set<string>();
-    for (const p of charityProfiles) {
-      const e164 = profileWhatsappToE164(
-        p.charityWhatsappCountry,
-        p.charityWhatsappNationalNumber,
-      );
-      if (!e164) {
-        continue;
-      }
-      if (seenE164.has(e164)) {
-        continue;
-      }
-      seenE164.add(e164);
+    const e164 = profileWhatsappToE164(
+      selectedCharity.charityWhatsappCountry,
+      selectedCharity.charityWhatsappNationalNumber,
+    );
+    if (e164) {
       await sendWasenderTextMessage(e164, text);
     }
   } catch (e) {
@@ -136,6 +160,8 @@ export async function submitDonationList(formData: FormData) {
   }
 
   revalidatePath("/donation-lists");
-  revalidatePath(`/donation-lists/${id}`);
+  revalidatePath(`/donation-lists/${list.id}`);
+  revalidatePath("/master-donation-lists");
+  revalidatePath(`/master-donation-lists/${list.id}`);
   redirect("/donation-lists");
 }

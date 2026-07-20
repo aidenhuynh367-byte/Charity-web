@@ -20,7 +20,7 @@ const decisionSchema = z.enum(["ACCEPT", "NOT_ACCEPT"]);
 export async function reviewDonationListItem(
   formData: FormData,
 ): Promise<{ error?: string }> {
-  await requireCharityOrganization();
+  const { userId } = await requireCharityOrganization();
 
   const itemId = formData.get("itemId");
   const decisionRaw = formData.get("decision");
@@ -37,8 +37,16 @@ export async function reviewDonationListItem(
       : DonationListItemCharityDecision.NOT_ACCEPT;
 
   const item = await prisma.donationListItem.findFirst({
-    where: { id: itemId },
-    include: { donationList: true },
+    where: {
+      id: itemId,
+      donationList: {
+        charityId: userId,
+        status: DonationListStatus.SUBMITTED,
+      },
+    },
+    include: {
+      donationList: true,
+    },
   });
   if (!item || item.donationList.status !== DonationListStatus.SUBMITTED) {
     return { error: "Item not found or list is not submitted." };
@@ -94,7 +102,11 @@ export async function submitCharityResponseToContributor(
   }
 
   const list = await prisma.donationList.findFirst({
-    where: { id: listId, status: DonationListStatus.SUBMITTED },
+    where: {
+      id: listId,
+      charityId: userId,
+      status: DonationListStatus.SUBMITTED,
+    },
     include: {
       items: true,
       contributor: { include: { profile: true } },
@@ -123,8 +135,8 @@ export async function submitCharityResponseToContributor(
   });
 
   try {
-    const baseUrl = appPublicOrigin();
-    const text = `${organizationName} has responded to you, please check your account ${baseUrl}`;
+    const listUrl = `${appPublicOrigin()}/donation-lists/${list.id}`;
+    const text = `${organizationName} has responded to you, please check your account ${listUrl}`;
     const prof = list.contributor.profile;
     const e164 = profileWhatsappToE164(
       prof?.contributorWhatsappCountry,

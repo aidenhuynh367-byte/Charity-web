@@ -31,6 +31,7 @@ type ProfileOnboardingSnapshot = {
   charityWhatsappCountry: string | null;
   charityWhatsappNationalNumber: string | null;
   charityEmail: string | null;
+  charityLocation: string | null;
   displayName: string | null;
   contributorLocation: string | null;
   contributorWhatsappCountry: string | null;
@@ -63,6 +64,7 @@ export function ProfileOnboardingForm({ role, initial }: Props) {
       const parsed = charityProfileSchema.safeParse({
         organizationName: formText(fd, "organizationName"),
         address: formText(fd, "address"),
+        charityLocation: formText(fd, "charityLocation"),
         phoneCountry: formText(fd, "phoneCountry"),
         phoneNationalNumber: formText(fd, "phoneNationalNumber"),
         charityWhatsappCountry: formText(fd, "charityWhatsappCountry"),
@@ -121,12 +123,9 @@ export function ProfileOnboardingForm({ role, initial }: Props) {
           name="address"
           defaultValue={initial.address ?? ""}
         />
-        <PhoneCountryFields
-          label="Phone number"
-          countryFieldName="phoneCountry"
-          nationalFieldName="phoneNationalNumber"
-          defaultCountry={initial.phoneCountry}
-          defaultNational={initial.phoneNationalNumber}
+        <ContributorLocationField
+          name="charityLocation"
+          defaultValue={initial.charityLocation}
         />
         <PhoneCountryFields
           label="WhatsApp number"
@@ -134,6 +133,13 @@ export function ProfileOnboardingForm({ role, initial }: Props) {
           nationalFieldName="charityWhatsappNationalNumber"
           defaultCountry={initial.charityWhatsappCountry}
           defaultNational={initial.charityWhatsappNationalNumber}
+        />
+        <PhoneCountryFields
+          label="Phone number"
+          countryFieldName="phoneCountry"
+          nationalFieldName="phoneNationalNumber"
+          defaultCountry={initial.phoneCountry}
+          defaultNational={initial.phoneNationalNumber}
         />
         <Field
           label="Email"

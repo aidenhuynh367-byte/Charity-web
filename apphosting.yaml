@@ -5,6 +5,15 @@
 #
 # Cross-project IAM: grant Cloud SQL Client on project-3735bbba-0864-4d45-a7a to:
 #   firebase-app-hosting-compute@charity-link-f61ff.iam.gserviceaccount.com
+#
+# App Hosting does not reliably apply cloudSqlInstances from this file.
+# After each `firebase deploy`, re-attach Cloud SQL so the Unix socket is mounted:
+#   gcloud run services update charity-link-backend \
+#     --project=charity-link-f61ff --region=asia-southeast1 \
+#     --add-cloudsql-instances=project-3735bbba-0864-4d45-a7a:asia-southeast2:free-trial-first-project
+#
+# DATABASE_URL secret must use:
+#   postgresql://USER:PASS@localhost/charityweb?host=/cloudsql/project-3735bbba-0864-4d45-a7a:asia-southeast2:free-trial-first-project&schema=public
 
 cloudSqlInstances:
   - project-3735bbba-0864-4d45-a7a:asia-southeast2:free-trial-first-project
@@ -24,7 +33,7 @@ env:
       - RUNTIME
 
   - variable: AUTH_URL
-    value: https://charity-link-backend--charity-link-f61ff.asia-southeast1.hosted.app
+    value: https://thecharitylink.org
     availability:
       - BUILD
       - RUNTIME

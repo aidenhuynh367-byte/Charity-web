@@ -26,25 +26,28 @@ function nationalNumberDigitsSchema() {
     );
 }
 
-/** Letters and digits only; min 5, max 200. Messages omit the label (caller adds via formatZodFormError). */
+/** Letters, digits, and spaces; min 5, max 200. Messages omit the label (caller adds via formatZodFormError). */
 export function alphanumericNameSchema() {
   return z
     .string()
     .trim()
     .min(
       5,
-      "Must be at least 5 characters and use only letters and numbers.",
+      "Must be at least 5 characters and use only letters, numbers, and spaces.",
     )
     .max(200, "Must be at most 200 characters.")
     .regex(
-      /^[a-zA-Z0-9]+$/,
-      "Must use only letters and numbers (no spaces or symbols).",
+      /^[a-zA-Z0-9]+(?: [a-zA-Z0-9]+)*$/,
+      "Must use only letters, numbers, and spaces (no symbols).",
     );
 }
 
 export const charityProfileSchema = z.object({
   organizationName: alphanumericNameSchema(),
   address: charityAddressSchema(),
+  charityLocation: z.enum(CONTRIBUTOR_LOCATIONS, {
+    errorMap: () => ({ message: "Please select a location." }),
+  }),
   phoneCountry: z
     .string()
     .trim()

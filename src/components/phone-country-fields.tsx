@@ -1,9 +1,12 @@
 "use client";
 
 import type { FormEvent } from "react";
-import { useId, useMemo } from "react";
+import { useEffect, useId, useState } from "react";
 
-import { getSortedCountryDialOptions } from "@/lib/country-dial-options";
+import {
+  getSortedCountryDialOptions,
+  type CountryDialOption,
+} from "@/lib/country-dial-options";
 
 type Props = {
   countryFieldName: string;
@@ -22,13 +25,22 @@ export function PhoneCountryFields({
   defaultNational,
   required,
 }: Props) {
-  const options = useMemo(() => getSortedCountryDialOptions(), []);
   const uid = useId();
+  const initialCountry = defaultCountry?.trim().toUpperCase() ?? "";
+  const initialNational = (defaultNational ?? "").replace(/\D/g, "");
 
-  const defaultC = defaultCountry?.trim().toUpperCase() ?? "";
-  const defaultN = (defaultNational ?? "").replace(/\D/g, "");
-  const countryDefault =
-    defaultC && options.some((o) => o.value === defaultC) ? defaultC : "";
+  // Build options only on the client — Node vs browser Intl.DisplayNames can
+  // disagree on region names and cause hydration text mismatches.
+  const [options, setOptions] = useState<CountryDialOption[]>([]);
+  const [country, setCountry] = useState(initialCountry);
+
+  useEffect(() => {
+    setOptions(getSortedCountryDialOptions());
+  }, []);
+
+  useEffect(() => {
+    setCountry(defaultCountry?.trim().toUpperCase() ?? "");
+  }, [defaultCountry]);
 
   function stripNonDigits(e: FormEvent<HTMLInputElement>) {
     const el = e.currentTarget;
@@ -45,13 +57,17 @@ export function PhoneCountryFields({
         <select
           id={`${uid}-country`}
           name={countryFieldName}
-          defaultValue={countryDefault}
+          value={country}
+          onChange={(e) => setCountry(e.target.value)}
           required={required}
           className="min-w-0 flex-1 rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none ring-slate-400 focus:ring-2"
         >
           <option value="" disabled={!!required}>
             Select country
           </option>
+          {country && !options.some((o) => o.value === country) ? (
+            <option value={country}>{country}</option>
+          ) : null}
           {options.map((o) => (
             <option key={o.value} value={o.value}>
               {o.label}
@@ -61,7 +77,7 @@ export function PhoneCountryFields({
         <input
           id={`${uid}-national`}
           name={nationalFieldName}
-          defaultValue={defaultN}
+          defaultValue={initialNational}
           required={required}
           inputMode="numeric"
           autoComplete="tel-national"

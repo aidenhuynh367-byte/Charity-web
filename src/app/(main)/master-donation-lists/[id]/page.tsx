@@ -37,11 +37,12 @@ type Props = { params: Promise<{ id: string }> };
 
 export default async function MasterDonationListDetailPage({ params }: Props) {
   const { id } = await params;
-  await requireCharityOrganization();
+  const { userId } = await requireCharityOrganization();
 
   const list = await prisma.donationList.findFirst({
     where: {
       id,
+      charityId: userId,
       status: {
         in: [DonationListStatus.SUBMITTED, DonationListStatus.REVIEWED],
       },

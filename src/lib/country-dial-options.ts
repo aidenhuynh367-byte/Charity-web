@@ -23,5 +23,6 @@ export function getSortedCountryDialOptions(): CountryDialOption[] {
         label: `${name} (+${dial})`,
       };
     })
-    .sort((a, b) => a.label.localeCompare(b.label, "en"));
+    // Sort by ISO code so order is identical on Node and in the browser.
+    .sort((a, b) => a.value.localeCompare(b.value, "en"));
 }

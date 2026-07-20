@@ -16,10 +16,11 @@ function formatStatus(status: string) {
 }
 
 export default async function MasterDonationListsPage() {
-  await requireCharityOrganization();
+  const { userId } = await requireCharityOrganization();
 
   const lists = await prisma.donationList.findMany({
     where: {
+      charityId: userId,
       status: {
         in: [DonationListStatus.SUBMITTED, DonationListStatus.REVIEWED],
       },

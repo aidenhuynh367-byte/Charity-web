@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { redirect } from "next/navigation";
 
 import { auth, signOut } from "@/auth";
@@ -46,13 +47,25 @@ export default async function LoginPage({
   const count = authConfig.providers?.length ?? 0;
 
   return (
-    <div className="mx-auto flex min-h-screen max-w-md flex-col justify-center px-4">
+    <div className="mx-auto flex min-h-screen max-w-md flex-col justify-center px-4 py-10">
       <h1 className="text-2xl font-bold text-slate-900">Sign in</h1>
-      <p className="mt-2 text-sm text-slate-600">
-        {showMicrosoftLogin
-          ? "Use Microsoft or Google. After signing in you will choose whether you are a charity organization or a contributor, then complete your profile."
-          : "Use Google to sign in. After signing in you will choose whether you are a charity organization or a contributor, then complete your profile."}
+      <p className="mt-4 text-sm leading-relaxed text-slate-600">
+        Charity Link is an application that helps connect you with a local
+        charity to help you donate your gently used items to help those in need.
+        There are many local orphanages that need your kindness and support to
+        help all the children in need. Please join us give whatever you can,
+        every little bit helps. Thank you.
       </p>
+      <div className="relative mt-6 aspect-[4/3] w-full overflow-hidden rounded-xl bg-slate-100">
+        <Image
+          src="/image1.webp"
+          alt="Charity Link"
+          fill
+          sizes="(max-width: 448px) 100vw, 448px"
+          className="object-contain"
+          priority
+        />
+      </div>
       {errorBanner ? (
         <p className="mt-6 rounded border border-red-200 bg-red-50 p-4 text-sm text-red-900">
           {errorBanner}

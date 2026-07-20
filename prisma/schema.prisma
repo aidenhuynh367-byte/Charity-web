@@ -40,7 +40,9 @@ model User {
   accounts       Account[]
   sessions       Session[]
   profile        Profile?
-  donationLists  DonationList[]
+  donationLists  DonationList[] @relation("ContributorDonationLists")
+  assignedDonationLists DonationList[] @relation("CharityDonationLists")
+  charityImages  CharityImage[]
 }
 
 model Account {
@@ -92,6 +94,8 @@ model Profile {
   charityWhatsappCountry         String?
   charityWhatsappNationalNumber  String?
   charityEmail           String?
+  /// Charity organization area (Bali locations list)
+  charityLocation        String?
   /// Contributor display name
   displayName            String?
   contributorLocation    String?
@@ -107,13 +111,17 @@ model DonationList {
   status                   DonationListStatus  @default(NOT_SUBMITTED)
   createdAt                DateTime            @default(now())
   contributorId            String
-  contributor              User                @relation(fields: [contributorId], references: [id], onDelete: Cascade)
+  contributor              User                @relation("ContributorDonationLists", fields: [contributorId], references: [id], onDelete: Cascade)
+  /// Charity organization (User id) assigned when the list is submitted.
+  charityId                String?
+  charity                  User?               @relation("CharityDonationLists", fields: [charityId], references: [id], onDelete: SetNull)
   items                    DonationListItem[]
   /// Optional message when charity uses "Respond to contributor".
   charityResponseMessage   String?             @db.Text
   charityRespondedAt       DateTime?
 
   @@index([contributorId, createdAt])
+  @@index([charityId, status, createdAt])
 }
 
 model DonationListItem {
@@ -129,4 +137,16 @@ model DonationListItem {
   charityDecision DonationListItemCharityDecision?
 
   @@index([donationListId])
+}
+
+/// Images owned by a charity organization. Stores multiple image URLs per charity.
+model CharityImage {
+  id        String   @id @default(cuid())
+  charityId String
+  charity   User     @relation(fields: [charityId], references: [id], onDelete: Cascade)
+  imageUrl  String
+  caption   String?
+  createdAt DateTime @default(now())
+
+  @@index([charityId, createdAt])
 }

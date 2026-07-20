@@ -33,6 +33,14 @@ export async function setRoleAction(
     return { error: firstZodError(parsed.error) };
   }
 
+  if (
+    parsed.data.role === "CHARITY_ORGANIZATION" &&
+    formData.get("AddOrg") !== "foobar" &&
+    formData.get("AddOrganization") !== "foobar"
+  ) {
+    return { error: "Charity organization sign-up is not available." };
+  }
+
   await prisma.profile.upsert({
     where: { userId: session.user.id },
     create: { userId: session.user.id, role: parsed.data.role },
@@ -60,6 +68,7 @@ export async function completeOnboardingProfileAction(
     const parsed = charityProfileSchema.safeParse({
       organizationName: formText(formData, "organizationName"),
       address: formText(formData, "address"),
+      charityLocation: formText(formData, "charityLocation"),
       phoneCountry: formText(formData, "phoneCountry"),
       phoneNationalNumber: formText(formData, "phoneNationalNumber"),
       charityWhatsappCountry: formText(formData, "charityWhatsappCountry"),
@@ -76,6 +85,7 @@ export async function completeOnboardingProfileAction(
       data: {
         organizationName: parsed.data.organizationName,
         address: parsed.data.address,
+        charityLocation: parsed.data.charityLocation,
         phoneCountry: parsed.data.phoneCountry,
         phoneNationalNumber: parsed.data.phoneNationalNumber,
         charityWhatsappCountry: parsed.data.charityWhatsappCountry,
@@ -113,6 +123,7 @@ export async function completeOnboardingProfileAction(
           parsed.data.contributorWhatsappNationalNumber,
         organizationName: null,
         address: null,
+        charityLocation: null,
         phoneCountry: null,
         phoneNationalNumber: null,
         charityWhatsappCountry: null,
@@ -144,6 +155,7 @@ export async function updateProfileAction(
     const parsed = charityProfileSchema.safeParse({
       organizationName: formText(formData, "organizationName"),
       address: formText(formData, "address"),
+      charityLocation: formText(formData, "charityLocation"),
       phoneCountry: formText(formData, "phoneCountry"),
       phoneNationalNumber: formText(formData, "phoneNationalNumber"),
       charityWhatsappCountry: formText(formData, "charityWhatsappCountry"),
@@ -160,6 +172,7 @@ export async function updateProfileAction(
       data: {
         organizationName: parsed.data.organizationName,
         address: parsed.data.address,
+        charityLocation: parsed.data.charityLocation,
         phoneCountry: parsed.data.phoneCountry,
         phoneNationalNumber: parsed.data.phoneNationalNumber,
         charityWhatsappCountry: parsed.data.charityWhatsappCountry,
@@ -196,6 +209,7 @@ export async function updateProfileAction(
           parsed.data.contributorWhatsappNationalNumber,
         organizationName: null,
         address: null,
+        charityLocation: null,
         phoneCountry: null,
         phoneNationalNumber: null,
         charityWhatsappCountry: null,

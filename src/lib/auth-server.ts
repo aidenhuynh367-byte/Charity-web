@@ -1,5 +1,6 @@
 import { Prisma, Role } from "@prisma/client";
 import { redirect } from "next/navigation";
+import { isRedirectError } from "next/dist/client/components/redirect-error";
 
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
@@ -16,21 +17,25 @@ export async function requireUserId(): Promise<string> {
  * otherwise the FK insert throws and produced 500s for stale JWTs.
  */
 export async function getOrCreateProfile(userId: string) {
-  const user = await prisma.user.findUnique({ where: { id: userId } });
-  if (!user) {
-    redirect("/login?error=stale_session");
-  }
-
   try {
+    const user = await prisma.user.findUnique({ where: { id: userId } });
+    if (!user) {
+      redirect("/login?error=stale_session");
+    }
+
     return await prisma.profile.upsert({
       where: { userId },
       create: { userId },
       update: {},
     });
   } catch (e) {
+    if (isRedirectError(e)) throw e;
+    if (e instanceof Prisma.PrismaClientInitializationError) {
+      console.error("[getOrCreateProfile] init", e.message);
+      redirect("/login?error=database");
+    }
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
       console.error("[getOrCreateProfile]", e.code, e.message);
-      // DB down / wrong URL / tables missing / FK issues
       if (e.code === "P1001" || e.code === "P1017") {
         redirect("/login?error=database");
       }

@@ -1,7 +1,10 @@
 import { DonationListStatus } from "@prisma/client";
 import Link from "next/link";
 
-import { deleteDonationList, submitDonationList } from "@/app/actions/donation-lists";
+import {
+  deleteDonationList,
+  submitDonationList,
+} from "@/app/actions/donation-lists";
 import { requireContributor } from "@/lib/auth-server";
 import { prisma } from "@/lib/prisma";
 
@@ -18,6 +21,11 @@ export default async function DonationListsPage() {
   const lists = await prisma.donationList.findMany({
     where: { contributorId: userId },
     orderBy: [{ status: "asc" }, { createdAt: "desc" }],
+    include: {
+      charity: {
+        include: { profile: true },
+      },
+    },
   });
 
   return (
@@ -76,6 +84,19 @@ export default async function DonationListsPage() {
                 <p className="mt-1 text-xs text-slate-500">
                   Created {list.createdAt.toLocaleString()}
                 </p>
+                {list.charityId && list.charity ? (
+                  <p className="mt-1 text-xs text-slate-600">
+                    Charity:{" "}
+                    <Link
+                      href={`/profile/${list.charityId}`}
+                      className="font-medium text-slate-900 underline hover:text-slate-700"
+                    >
+                      {list.charity.profile?.organizationName?.trim() ||
+                        list.charity.name?.trim() ||
+                        "Charity organization"}
+                    </Link>
+                  </p>
+                ) : null}
                 {list.status === DonationListStatus.REVIEWED &&
                 list.charityResponseMessage ? (
                   <div className="mt-2 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-xs text-slate-800">

@@ -11,10 +11,14 @@ type Props = { params: Promise<{ id: string }> };
 
 export default async function RespondToContributorPage({ params }: Props) {
   const { id } = await params;
-  await requireCharityOrganization();
+  const { userId } = await requireCharityOrganization();
 
   const list = await prisma.donationList.findFirst({
-    where: { id, status: DonationListStatus.SUBMITTED },
+    where: {
+      id,
+      charityId: userId,
+      status: DonationListStatus.SUBMITTED,
+    },
     include: { items: true },
   });
   if (!list) notFound();
