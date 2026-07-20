@@ -6,6 +6,7 @@ import {
   addCharityImage,
   type CharityImageFormState,
 } from "@/app/actions/charity-images";
+import { PhotoCaptureSlot } from "@/components/photo-capture-slot";
 import { compressDonationImageIfNeeded } from "@/lib/donation-item-image-compress";
 
 export function AddPhotoModal() {
@@ -14,28 +15,20 @@ export function AddPhotoModal() {
     addCharityImage,
     null,
   );
-  const [filePreview, setFilePreview] = useState<string | null>(null);
+  const [imageFile, setImageFile] = useState<File | null>(null);
   const [clientError, setClientError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
 
   function openModal() {
     setOpen(true);
     setClientError(null);
+    setImageFile(null);
   }
 
   function closeModal() {
     setOpen(false);
-    setFilePreview(null);
+    setImageFile(null);
     setClientError(null);
-  }
-
-  function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const f = e.currentTarget.files?.[0];
-    if (!f) {
-      setFilePreview(null);
-      return;
-    }
-    setFilePreview(URL.createObjectURL(f));
   }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -43,9 +36,7 @@ export function AddPhotoModal() {
     setClientError(null);
     const form = e.currentTarget;
     const fdIn = new FormData(form);
-    const raw = form.querySelector<HTMLInputElement>("#charity-image")
-      ?.files?.[0];
-    if (!raw) {
+    if (!imageFile) {
       setClientError("Select an image.");
       return;
     }
@@ -56,7 +47,7 @@ export function AddPhotoModal() {
     }
 
     try {
-      const image = await compressDonationImageIfNeeded(raw);
+      const image = await compressDonationImageIfNeeded(imageFile);
       const fd = new FormData();
       fd.set("image", image);
       fd.set("caption", caption.trim().slice(0, 50));
@@ -81,7 +72,7 @@ export function AddPhotoModal() {
       </button>
       {open ? (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
-          <div className="mx-auto w-full max-w-lg rounded-lg bg-white p-6 shadow-lg">
+          <div className="mx-auto max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-lg bg-white p-6 shadow-lg">
             <h2 className="text-lg font-medium text-slate-900">Add a photo</h2>
             <form onSubmit={handleSubmit} className="mt-4 space-y-4">
               {banner ? (
@@ -89,31 +80,13 @@ export function AddPhotoModal() {
                   {banner}
                 </p>
               ) : null}
-              <div>
-                <label
-                  htmlFor="charity-image"
-                  className="text-sm font-medium text-slate-700"
-                >
-                  Image
-                </label>
-                <input
-                  id="charity-image"
-                  name="image"
-                  type="file"
-                  accept="image/jpeg,image/png,image/webp,image/gif"
-                  onChange={handleFileChange}
-                  className="mt-2 block w-full text-sm"
-                  required
-                />
-              </div>
-              {filePreview ? (
-                // eslint-disable-next-line @next/next/no-img-element -- local preview blob
-                <img
-                  src={filePreview}
-                  className="max-h-48 rounded-md object-contain"
-                  alt="Preview"
-                />
-              ) : null}
+              <PhotoCaptureSlot
+                id="charity-image"
+                label="Image"
+                file={imageFile}
+                onFileChange={setImageFile}
+                overlayClassName="z-[60]"
+              />
               <div>
                 <label
                   htmlFor="caption"
