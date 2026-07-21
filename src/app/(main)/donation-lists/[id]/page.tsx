@@ -61,7 +61,8 @@ export default async function DonationListDetailPage({ params }: Props) {
           </dd>
         </div>
       </dl>
-      {list.status === DonationListStatus.REVIEWED &&
+      {(list.status === DonationListStatus.REVIEWED ||
+        list.status === DonationListStatus.COMPLETED) &&
       list.charityResponseMessage ? (
         <div className="mt-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-sm">
           <p className="font-medium text-slate-500">Message from charity</p>
@@ -115,7 +116,8 @@ export default async function DonationListDetailPage({ params }: Props) {
                     <p className="mt-2 text-xs text-slate-500">
                       Added {item.createdAt.toLocaleString()}
                     </p>
-                    {list.status === DonationListStatus.REVIEWED ? (
+                    {list.status === DonationListStatus.REVIEWED ||
+                    list.status === DonationListStatus.COMPLETED ? (
                       <p className="mt-3 text-sm font-medium text-slate-800">
                         Charity response:{" "}
                         <span className="font-semibold text-slate-900">

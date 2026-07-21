@@ -70,11 +70,13 @@ export default async function DonationListsPage() {
                   </Link>
                   <span
                     className={
-                      list.status === DonationListStatus.REVIEWED
-                        ? "rounded-full bg-sky-100 px-2 py-0.5 text-xs font-medium text-sky-900"
-                        : list.status === DonationListStatus.SUBMITTED
-                          ? "rounded-full bg-emerald-100 px-2 py-0.5 text-xs font-medium text-emerald-800"
-                          : "rounded-full bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-900"
+                      list.status === DonationListStatus.COMPLETED
+                        ? "rounded-full bg-violet-100 px-2 py-0.5 text-xs font-medium text-violet-900"
+                        : list.status === DonationListStatus.REVIEWED
+                          ? "rounded-full bg-sky-100 px-2 py-0.5 text-xs font-medium text-sky-900"
+                          : list.status === DonationListStatus.SUBMITTED
+                            ? "rounded-full bg-emerald-100 px-2 py-0.5 text-xs font-medium text-emerald-800"
+                            : "rounded-full bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-900"
                     }
                     title="Status"
                   >
@@ -97,7 +99,8 @@ export default async function DonationListsPage() {
                     </Link>
                   </p>
                 ) : null}
-                {list.status === DonationListStatus.REVIEWED &&
+                {(list.status === DonationListStatus.REVIEWED ||
+                  list.status === DonationListStatus.COMPLETED) &&
                 list.charityResponseMessage ? (
                   <div className="mt-2 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-xs text-slate-800">
                     <p className="font-medium text-slate-600">
@@ -115,6 +118,16 @@ export default async function DonationListsPage() {
                 ) : null}
               </div>
               <div className="flex flex-wrap items-center gap-2">
+                {(list.status === DonationListStatus.REVIEWED ||
+                  list.status === DonationListStatus.COMPLETED) &&
+                list.charityId ? (
+                  <Link
+                    href={`/profile/${list.charityId}`}
+                    className="rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-sm font-medium text-slate-800 hover:bg-slate-50"
+                  >
+                    Contact Charity
+                  </Link>
+                ) : null}
                 {list.status === DonationListStatus.NOT_SUBMITTED ? (
                   <form action={submitDonationList}>
                     <input type="hidden" name="id" value={list.id} />

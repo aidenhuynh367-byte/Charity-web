@@ -44,7 +44,11 @@ export default async function MasterDonationListDetailPage({ params }: Props) {
       id,
       charityId: userId,
       status: {
-        in: [DonationListStatus.SUBMITTED, DonationListStatus.REVIEWED],
+        in: [
+          DonationListStatus.SUBMITTED,
+          DonationListStatus.REVIEWED,
+          DonationListStatus.COMPLETED,
+        ],
       },
     },
     include: {

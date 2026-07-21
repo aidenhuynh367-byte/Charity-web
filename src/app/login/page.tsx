@@ -5,6 +5,7 @@ import { auth, signOut } from "@/auth";
 import { authConfig } from "@/auth.config";
 
 import { LoginButtons } from "./login-buttons";
+import { LoginSlideshow } from "./login-slideshow";
 
 type LoginSearchParams = { [key: string]: string | string[] | undefined };
 
@@ -48,24 +49,28 @@ export default async function LoginPage({
 
   return (
     <div className="mx-auto flex min-h-screen max-w-md flex-col justify-center px-4 py-10">
+      <header className="mb-8 flex flex-col items-center text-center">
+        <Image
+          src="/mainlogo.png"
+          alt="Charity Link"
+          width={280}
+          height={140}
+          className="h-auto w-56 sm:w-72"
+          priority
+        />
+        <p className="mt-4 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+          TheCharityLink.org
+        </p>
+      </header>
       <h1 className="text-2xl font-bold text-slate-900">Sign in</h1>
       <p className="mt-4 text-sm leading-relaxed text-slate-600">
         Charity Link is an application that helps connect you with a local
         charity to help you donate your gently used items to help those in need.
         There are many local orphanages that need your kindness and support to
-        help all the children in need. Please join us give whatever you can,
+        help all the children in need. Please join us and give whatever you can,
         every little bit helps. Thank you.
       </p>
-      <div className="relative mt-6 aspect-[4/3] w-full overflow-hidden rounded-xl bg-slate-100">
-        <Image
-          src="/image1.webp"
-          alt="Charity Link"
-          fill
-          sizes="(max-width: 448px) 100vw, 448px"
-          className="object-contain"
-          priority
-        />
-      </div>
+      <LoginSlideshow />
       {errorBanner ? (
         <p className="mt-6 rounded border border-red-200 bg-red-50 p-4 text-sm text-red-900">
           {errorBanner}

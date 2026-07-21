@@ -19,6 +19,7 @@ enum DonationListStatus {
   NOT_SUBMITTED
   SUBMITTED
   REVIEWED
+  COMPLETED
 }
 
 enum DonationListItemReviewStatus {
@@ -119,6 +120,8 @@ model DonationList {
   /// Optional message when charity uses "Respond to contributor".
   charityResponseMessage   String?             @db.Text
   charityRespondedAt       DateTime?
+  /// Set when the charity marks the list Completed via "Give Thanks".
+  completedAt              DateTime?
 
   @@index([contributorId, createdAt])
   @@index([charityId, status, createdAt])

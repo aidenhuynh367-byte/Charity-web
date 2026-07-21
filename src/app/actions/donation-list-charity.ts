@@ -60,8 +60,22 @@ export async function reviewDonationListItem(
     },
   });
 
+  const listId = item.donationListId;
+  const remaining = await prisma.donationListItem.count({
+    where: {
+      donationListId: listId,
+      reviewStatus: DonationListItemReviewStatus.PENDING,
+    },
+  });
+
   revalidatePath("/master-donation-lists");
-  revalidatePath(`/master-donation-lists/${item.donationListId}`);
+  revalidatePath(`/master-donation-lists/${listId}`);
+  revalidatePath(`/master-donation-lists/${listId}/respond`);
+
+  if (remaining === 0) {
+    redirect(`/master-donation-lists/${listId}/respond`);
+  }
+
   return {};
 }
 

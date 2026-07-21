@@ -1,9 +1,10 @@
 import Link from "next/link";
 
-import { WelcomeSlideshow } from "@/app/onboarding/role/welcome-slideshow";
 import { ShareWidget } from "@/components/share-widget";
 import { appPublicOrigin } from "@/lib/app-public-url";
 import { requireUserId, getOrCreateProfile } from "@/lib/auth-server";
+
+import { HowItWorksWizard } from "./how-it-works-wizard";
 
 export default async function DashboardPage() {
   const userId = await requireUserId();
@@ -16,9 +17,9 @@ export default async function DashboardPage() {
 
   return (
     <main>
-      <h1 className="text-2xl font-bold text-slate-900">Welcome</h1>
       {isCharity ? (
         <>
+          <h1 className="text-2xl font-bold text-slate-900">Welcome</h1>
           <p className="mt-2 text-slate-600">
             You are signed in as a <strong>Charity organization</strong>
             {title ? (
@@ -38,6 +39,12 @@ export default async function DashboardPage() {
         </>
       ) : (
         <>
+          <Link
+            href="/donation-lists/new"
+            className="inline-flex rounded-lg bg-slate-900 px-5 py-3 text-base font-medium text-white hover:bg-slate-800"
+          >
+            Start Donating
+          </Link>
           <p className="mt-6 text-slate-700">
             Hi {contributorName}, thank you for using the Charity Link app.
             Charity Link helps connect you with a local charity to help you
@@ -50,8 +57,10 @@ export default async function DashboardPage() {
             Thanks again and please spread the word and share this to your
             friends, family, community!
           </p>
-          <ShareWidget url={appUrl} />
-          <WelcomeSlideshow />
+          <HowItWorksWizard />
+          <div className="mt-10">
+            <ShareWidget url={appUrl} />
+          </div>
         </>
       )}
     </main>

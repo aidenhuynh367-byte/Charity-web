@@ -32,12 +32,20 @@ export default async function ProfilePage() {
         </div>
         <div className="flex flex-wrap items-center gap-2">
           {profile.role === Role.CHARITY_ORGANIZATION ? (
-            <Link
-              href={`/profile/${userId}/photos`}
-              className="rounded-lg border border-slate-300 px-3 py-2 text-sm font-medium text-slate-800 hover:bg-slate-50"
-            >
-              Goto photos
-            </Link>
+            <>
+              <Link
+                href="/thank-you"
+                className="rounded-lg border border-slate-300 px-3 py-2 text-sm font-medium text-slate-800 hover:bg-slate-50"
+              >
+                Thank You
+              </Link>
+              <Link
+                href={`/profile/${userId}/photos`}
+                className="rounded-lg border border-slate-300 px-3 py-2 text-sm font-medium text-slate-800 hover:bg-slate-50"
+              >
+                Goto photos
+              </Link>
+            </>
           ) : null}
           <form action={logoutAction}>
             <button
