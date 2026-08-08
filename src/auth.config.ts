@@ -4,6 +4,8 @@ import { NextResponse } from "next/server";
 import Google from "next-auth/providers/google";
 import AzureAD from "next-auth/providers/azure-ad";
 
+import { safeInternalPath } from "@/lib/login-redirect";
+
 function providers() {
   const list: NextAuthConfig["providers"] = [];
 
@@ -87,6 +89,17 @@ export const authConfig = {
       if (path.startsWith("/api/auth")) return true;
       if (path.startsWith("/login")) {
         if (isLoggedIn) {
+          if (nextUrl.searchParams.get("AddOrg") === "foobar") {
+            return NextResponse.redirect(
+              new URL("/onboarding/role?AddOrg=foobar", nextUrl),
+            );
+          }
+          const callback = safeInternalPath(
+            nextUrl.searchParams.get("callbackUrl"),
+          );
+          if (callback) {
+            return NextResponse.redirect(new URL(callback, nextUrl));
+          }
           return NextResponse.redirect(new URL("/dashboard", nextUrl));
         }
         return true;

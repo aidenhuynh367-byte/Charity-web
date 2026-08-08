@@ -31,6 +31,9 @@ export default async function LoginPage({
   const errorCode = typeof params.error === "string" ? params.error : undefined;
   const noticeCode = typeof params.notice === "string" ? params.notice : undefined;
   const showMicrosoftLogin = params.showMSLogin === "Yes";
+  const addOrg = typeof params.AddOrg === "string" ? params.AddOrg : null;
+  const callbackUrl =
+    typeof params.callbackUrl === "string" ? params.callbackUrl : null;
 
   const session = await auth();
 
@@ -40,6 +43,9 @@ export default async function LoginPage({
   }
 
   if (session?.user?.id) {
+    if (addOrg === "foobar") {
+      redirect("/onboarding/role?AddOrg=foobar");
+    }
     redirect("/dashboard");
   }
 
@@ -84,7 +90,11 @@ export default async function LoginPage({
           one provider&apos;s client ID and secret.
         </p>
       ) : (
-        <LoginButtons showMicrosoftLogin={showMicrosoftLogin} />
+        <LoginButtons
+          showMicrosoftLogin={showMicrosoftLogin}
+          callbackUrl={callbackUrl}
+          addOrg={addOrg}
+        />
       )}
     </div>
   );

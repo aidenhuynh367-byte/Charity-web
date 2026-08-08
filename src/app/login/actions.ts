@@ -2,6 +2,7 @@
 
 import { signIn } from "@/auth";
 import { getConfiguredProviderIds } from "@/auth.config";
+import { charityOnboardingPathFromForm } from "@/lib/login-redirect";
 
 const allowedProviders = new Set(["google", "azure-ad"]);
 
@@ -20,5 +21,7 @@ export async function loginWith(provider: string, formData: FormData) {
       "This sign-in method is not configured. Add the client ID and secret to .env and restart the dev server.",
     );
   }
-  await signIn(provider, { redirectTo: "/onboarding/role" });
+  await signIn(provider, {
+    redirectTo: charityOnboardingPathFromForm(formData),
+  });
 }
