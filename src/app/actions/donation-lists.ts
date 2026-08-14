@@ -84,6 +84,23 @@ export async function submitDonationList(formData: FormData) {
     throw new Error("Missing list id.");
   }
 
+  const listWithItems = await prisma.donationList.findFirst({
+    where: {
+      id: listId,
+      contributorId: userId,
+      status: DonationListStatus.NOT_SUBMITTED,
+    },
+    include: { _count: { select: { items: true } } },
+  });
+  if (!listWithItems) {
+    throw new Error(
+      "List not found, already submitted, or you do not have access.",
+    );
+  }
+  if (listWithItems._count.items === 0) {
+    throw new Error("Add at least one item before submitting the list.");
+  }
+
   const contributorUser = await prisma.user.findUnique({
     where: { id: userId },
     include: { profile: true },

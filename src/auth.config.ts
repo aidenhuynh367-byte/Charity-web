@@ -5,6 +5,7 @@ import Google from "next-auth/providers/google";
 import AzureAD from "next-auth/providers/azure-ad";
 
 import { safeInternalPath } from "@/lib/login-redirect";
+import { isPublicProfilePath } from "@/lib/public-profile-path";
 
 function providers() {
   const list: NextAuthConfig["providers"] = [];
@@ -104,6 +105,8 @@ export const authConfig = {
         }
         return true;
       }
+
+      if (isPublicProfilePath(path)) return true;
 
       const protectedPrefix =
         path.startsWith("/dashboard") ||

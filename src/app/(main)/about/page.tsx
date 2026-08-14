@@ -27,19 +27,19 @@ export default function AboutPage() {
           href="https://www.ccsbali.com/"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 font-medium underline hover:text-slate-900"
+          className="font-medium underline hover:text-slate-900"
         >
           CCS (Canggu Community School)
-          <Image
-            src="/ccs-logo.png"
-            alt="Canggu Community School logo"
-            width={173}
-            height={173}
-            className="h-[10.8rem] w-[10.8rem] rounded-full object-cover"
-          />
         </a>
         .
       </p>
+      <Image
+        src="/ccs-logo.png"
+        alt="Canggu Community School logo"
+        width={173}
+        height={173}
+        className="mt-4 h-[10.8rem] w-[10.8rem] rounded-full object-cover"
+      />
 
       <section className="mt-10">
         <h2 className="text-lg font-semibold text-slate-900">

@@ -3,7 +3,8 @@ import { notFound, redirect } from "next/navigation";
 import { Role, type Profile } from "@prisma/client";
 import { getCountryCallingCode, type CountryCode } from "libphonenumber-js";
 
-import { requireUserId, getOrCreateProfile } from "@/lib/auth-server";
+import { auth } from "@/auth";
+import { getOrCreateProfile } from "@/lib/auth-server";
 import { CharityPhotoGrid } from "@/components/charity-photo-grid";
 import { prisma } from "@/lib/prisma";
 import { profileWhatsappToE164 } from "@/lib/profile-whatsapp-e164";
@@ -36,12 +37,8 @@ type Props = { params: Promise<{ userId: string }> };
 
 export default async function ProfileReadOnlyPage({ params }: Props) {
   const { userId: targetUserId } = await params;
-  const viewerId = await requireUserId();
-  const viewerProfile = await getOrCreateProfile(viewerId);
-
-  if (targetUserId === viewerId) {
-    redirect("/profile");
-  }
+  const session = await auth();
+  const viewerId = session?.user?.id ?? null;
 
   const target = await prisma.user.findUnique({
     where: { id: targetUserId },
@@ -52,11 +49,48 @@ export default async function ProfileReadOnlyPage({ params }: Props) {
     notFound();
   }
 
+  if (viewerId === targetUserId) {
+    redirect("/profile");
+  }
+
   const targetRole = target.profile.role;
-  const viewerRole = viewerProfile.role;
+
+  if (targetRole === Role.CHARITY_ORGANIZATION) {
+    const images = await prisma.charityImage.findMany({
+      where: { charityId: targetUserId },
+      orderBy: { createdAt: "desc" },
+      select: { id: true, imageUrl: true, caption: true },
+    });
+    const viewerProfile = viewerId
+      ? await getOrCreateProfile(viewerId)
+      : null;
+    return (
+      <CharityProfileReadOnly
+        charityId={targetUserId}
+        backHref={
+          viewerProfile?.role === Role.CONTRIBUTOR ? "/donation-lists" : "/"
+        }
+        organizationName={
+          target.profile.organizationName?.trim() ||
+          target.name?.trim() ||
+          "Charity organization"
+        }
+        profile={target.profile}
+        images={images}
+      />
+    );
+  }
+
+  if (!viewerId) {
+    redirect(
+      `/login?callbackUrl=${encodeURIComponent(`/profile/${targetUserId}`)}`,
+    );
+  }
+
+  const viewerProfile = await getOrCreateProfile(viewerId);
 
   if (
-    viewerRole === Role.CHARITY_ORGANIZATION &&
+    viewerProfile.role === Role.CHARITY_ORGANIZATION &&
     targetRole === Role.CONTRIBUTOR
   ) {
     return (
@@ -72,28 +106,6 @@ export default async function ProfileReadOnlyPage({ params }: Props) {
     );
   }
 
-  if (
-    viewerRole === Role.CONTRIBUTOR &&
-    targetRole === Role.CHARITY_ORGANIZATION
-  ) {
-    const images = await prisma.charityImage.findMany({
-      where: { charityId: targetUserId },
-      orderBy: { createdAt: "desc" },
-      select: { id: true, imageUrl: true, caption: true },
-    });
-    return (
-      <CharityProfileReadOnly
-        organizationName={
-          target.profile.organizationName?.trim() ||
-          target.name?.trim() ||
-          "Charity organization"
-        }
-        profile={target.profile}
-        images={images}
-      />
-    );
-  }
-
   redirect("/dashboard");
 }
 
@@ -104,6 +116,15 @@ function ContributorProfileReadOnly({
   displayName: string;
   profile: Profile;
 }) {
+  const whatsappLabel = formatPhoneLine(
+    profile.contributorWhatsappCountry,
+    profile.contributorWhatsappNationalNumber,
+  );
+  const whatsappE164 = profileWhatsappToE164(
+    profile.contributorWhatsappCountry,
+    profile.contributorWhatsappNationalNumber,
+  );
+
   return (
     <main>
       <Link
@@ -131,9 +152,17 @@ function ContributorProfileReadOnly({
         <div>
           <dt className="font-medium text-slate-500">WhatsApp number</dt>
           <dd className="text-slate-900">
-            {formatPhoneLine(
-              profile.contributorWhatsappCountry,
-              profile.contributorWhatsappNationalNumber,
+            {whatsappE164 ? (
+              <a
+                href={whatsappChatUrl(whatsappE164)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline hover:text-slate-700"
+              >
+                {whatsappLabel}
+              </a>
+            ) : (
+              whatsappLabel
             )}
           </dd>
         </div>
@@ -143,10 +172,14 @@ function ContributorProfileReadOnly({
 }
 
 function CharityProfileReadOnly({
+  charityId,
+  backHref,
   organizationName,
   profile,
   images,
 }: {
+  charityId: string;
+  backHref: string;
   organizationName: string;
   profile: Profile;
   images: { id: string; imageUrl: string; caption: string | null }[];
@@ -173,19 +206,17 @@ function CharityProfileReadOnly({
   return (
     <main>
       <Link
-        href="/donation-lists"
+        href={backHref}
         className="text-sm font-medium text-slate-600 hover:text-slate-900"
       >
-        ← Back to donation lists
+        ← Back
       </Link>
       <div className="mt-4 flex flex-wrap items-start justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-slate-900">
             Charity organization profile
           </h1>
-          <p className="mt-1 text-sm text-slate-600">
-            Read-only view.
-          </p>
+          <p className="mt-1 text-sm text-slate-600">Read-only view.</p>
         </div>
       </div>
 
@@ -273,7 +304,13 @@ function CharityProfileReadOnly({
       </dl>
 
       <section className="mt-10 border-t border-slate-200 pt-8">
-        <h2 className="text-lg font-semibold text-slate-900">Photos</h2>
+        <Link
+          href={`/profile/${charityId}/thank-yous`}
+          className="inline-flex rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-800 hover:bg-slate-50"
+        >
+          Thank-yous
+        </Link>
+        <h2 className="mt-4 text-lg font-semibold text-slate-900">Photos</h2>
         <CharityPhotoGrid images={images} />
       </section>
     </main>

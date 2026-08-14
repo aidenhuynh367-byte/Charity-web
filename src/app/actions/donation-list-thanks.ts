@@ -65,6 +65,7 @@ export async function giveThanksForDonationList(formData: FormData) {
   revalidatePath("/master-donation-lists");
   revalidatePath(`/master-donation-lists/${id}`);
   revalidatePath("/thank-you");
+  revalidatePath(`/profile/${userId}/thank-yous`);
   revalidatePath(`/contributor-thank-you/${id}`);
   revalidatePath(`/contributor-thank-you/${id}/share`);
   revalidatePath("/donation-lists");

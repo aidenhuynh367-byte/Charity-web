@@ -25,6 +25,9 @@ export default async function DonationListsPage() {
       charity: {
         include: { profile: true },
       },
+      _count: {
+        select: { items: true },
+      },
     },
   });
 
@@ -128,7 +131,8 @@ export default async function DonationListsPage() {
                     Contact Charity
                   </Link>
                 ) : null}
-                {list.status === DonationListStatus.NOT_SUBMITTED ? (
+                {list.status === DonationListStatus.NOT_SUBMITTED &&
+                list._count.items > 0 ? (
                   <form action={submitDonationList}>
                     <input type="hidden" name="id" value={list.id} />
                     <button

@@ -17,7 +17,18 @@ export default function FaqPage() {
               {item.question}
             </dt>
             <dd className="mt-2 text-sm leading-relaxed text-slate-700">
-              {item.answer}
+              {"whatsappE164" in item && item.whatsappE164 ? (
+                <a
+                  href={`https://wa.me/${item.whatsappE164}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-medium text-slate-900 underline hover:text-slate-700"
+                >
+                  {item.answer}
+                </a>
+              ) : (
+                item.answer
+              )}
             </dd>
           </div>
         ))}

@@ -26,8 +26,8 @@ export const FAQ_ITEMS = [
   },
   {
     question: "I’m a charity organization. How do I get started?",
-    answer:
-      "Sign in, complete your charity profile (including location and contact details), then review submitted donation lists from Master donation lists and respond to contributors.",
+    answer: "Please contact the site administrator +62 8170778474",
+    whatsappE164: "628170778474",
   },
   {
     question: "Can I share Charity Link with others?",
