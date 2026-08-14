@@ -1,6 +1,6 @@
 import { PublicSiteShell } from "@/components/public-site-shell";
 
-export default function PublicProfileLayout({
+export default function PublicPagesLayout({
   children,
 }: {
   children: React.ReactNode;

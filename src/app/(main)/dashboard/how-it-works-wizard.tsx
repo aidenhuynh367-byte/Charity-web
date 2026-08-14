@@ -8,7 +8,7 @@ const STEPS = [
     title: "Create an account",
     description:
       "The contributor creates an account to get started with Charity Link.",
-    src: "/how-it-works/01-account.webp",
+    src: "/how-it-works/01-account-new.jpeg",
     alt: "Contributor creating an account",
   },
   {

@@ -48,9 +48,6 @@ export default async function MainLayout({
           <Link href="/faq" className="hover:text-slate-900">
             FAQ
           </Link>
-          <Link href="/about" className="hover:text-slate-900">
-            About
-          </Link>
         </nav>
       </header>
       {children}

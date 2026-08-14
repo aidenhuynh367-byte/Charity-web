@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 
 import { auth, signOut } from "@/auth";
@@ -54,7 +55,13 @@ export default async function LoginPage({
   const count = authConfig.providers?.length ?? 0;
 
   return (
-    <div className="mx-auto flex min-h-screen max-w-md flex-col justify-center px-4 py-10">
+    <div className="relative min-h-screen">
+      <nav className="absolute right-4 top-4 flex gap-4 text-base font-bold text-slate-900 sm:right-6 sm:top-6">
+        <Link href="/faq" className="hover:text-slate-700">
+          FAQ
+        </Link>
+      </nav>
+      <div className="mx-auto flex min-h-screen max-w-md flex-col justify-center px-4 py-10">
       <header className="mb-8 flex flex-col items-center text-center">
         <Image
           src="/mainlogo.png"
@@ -68,8 +75,7 @@ export default async function LoginPage({
           TheCharityLink.org
         </p>
       </header>
-      <h1 className="text-2xl font-bold text-slate-900">Sign in</h1>
-      <p className="mt-4 text-sm leading-relaxed text-slate-600">
+      <p className="text-sm leading-relaxed text-slate-600">
         Charity Link is an application that helps connect you with a local
         charity to help you donate your gently used items to help those in need.
         There are many local orphanages that need your kindness and support to
@@ -96,6 +102,7 @@ export default async function LoginPage({
           addOrg={addOrg}
         />
       )}
+      </div>
     </div>
   );
 }

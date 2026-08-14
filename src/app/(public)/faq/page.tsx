@@ -35,11 +35,11 @@ export default function FaqPage() {
       </dl>
 
       <p className="mt-10 text-sm text-slate-500">
-        Still have questions? Visit the{" "}
-        <Link href="/about" className="underline hover:text-slate-800">
-          About
+        Still have questions?{" "}
+        <Link href="/login" className="underline hover:text-slate-800">
+          Sign in
         </Link>{" "}
-        page or update your profile contact details so charities can reach you.
+        to update your profile contact details.
       </p>
     </main>
   );

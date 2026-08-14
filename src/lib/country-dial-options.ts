@@ -9,9 +9,14 @@ export type CountryDialOption = {
   label: string;
 };
 
+/** ISO 3166-1 alpha-2 codes excluded from the phone country dropdown. */
+const EXCLUDED_COUNTRY_CODES = new Set<CountryCode>(["IL"]);
+
 /** Sorted list for `<select>`: country name + dial code; value is ISO 3166-1 alpha-2. */
 export function getSortedCountryDialOptions(): CountryDialOption[] {
-  const codes = getCountries();
+  const codes = getCountries().filter(
+    (code) => !EXCLUDED_COUNTRY_CODES.has(code as CountryCode),
+  );
   const intl = new Intl.DisplayNames(["en"], { type: "region" });
   return codes
     .map((code) => {
