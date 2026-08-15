@@ -37,15 +37,12 @@ export default async function OnboardingRolePage({
   }
 
   return (
-    <div className="mx-auto flex min-h-[70vh] max-w-lg flex-col px-4 py-10">
-      <div className="flex-1">
-        <h1 className="text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl">
-          Welcome
-        </h1>
-        <p className="mt-4 text-lg leading-relaxed text-slate-600 sm:text-xl">
-          You can create a Contributor account to connect to a local charity and
-          help them easily donate your gently used items. The children thank you
-          for your generosity and support.
+    <div className="mx-auto flex min-h-[70vh] max-w-lg flex-col px-4 pb-10 pt-1.5">
+      <div>
+        <p className="text-lg font-bold leading-relaxed text-slate-900 sm:text-xl">
+          Create a Contributor account to connect to a local charity to easily
+          donate your gently used items. Thank you for your generosity and
+          support.
         </p>
         <WelcomeSlideshow />
       </div>

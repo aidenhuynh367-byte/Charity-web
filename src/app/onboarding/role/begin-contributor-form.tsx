@@ -11,7 +11,7 @@ export function BeginContributorForm() {
   );
 
   return (
-    <form action={formAction} className="mt-10 space-y-4">
+    <form action={formAction} className="mt-5 space-y-4">
       <input type="hidden" name="role" value="CONTRIBUTOR" />
       {state?.error ? (
         <p className="rounded border border-red-200 bg-red-50 p-3 text-sm text-red-800">
