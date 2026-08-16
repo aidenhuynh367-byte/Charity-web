@@ -1,0 +1,325 @@
+{
+  "brand": {
+    "name": "TheCharityLink.org",
+    "alt": "Charity Link"
+  },
+  "nav": {
+    "home": "Home",
+    "signIn": "Sign in",
+    "faq": "FAQ",
+    "donationLists": "Donation lists",
+    "masterDonationLists": "Master donation lists",
+    "profile": "Profile",
+    "language": "Language"
+  },
+  "common": {
+    "cancel": "Cancel",
+    "back": "← Back",
+    "emDash": "—",
+    "loading": "Loading…",
+    "errorTitle": "Something went wrong",
+    "errorCode": "Error code: {code}"
+  },
+  "status": {
+    "NOT_SUBMITTED": "Not submitted",
+    "SUBMITTED": "Submitted",
+    "REVIEWED": "Reviewed",
+    "COMPLETED": "Completed"
+  },
+  "decision": {
+    "accept": "Accept",
+    "notAccept": "Not Accept"
+  },
+  "login": {
+    "intro": "Charity Link is an application that helps connect you with a local charity to help you donate your gently used items to help those in need. There are many local orphanages that need your kindness and support to help all the children in need. Please join us and give whatever you can, every little bit helps. Thank you.",
+    "google": "Signin with Google",
+    "microsoft": "Continue with Microsoft",
+    "error": {
+      "staleSession": "Your account was not found in the database (or the session is outdated). Sign in again.",
+      "database": "Cannot reach the database. Check DATABASE_URL, ensure Postgres is running, then restart the dev server.",
+      "migration": "Database tables are missing. From the project folder run: npx prisma migrate dev (or npx prisma db push).",
+      "noProviders": "No OAuth providers are configured. Copy .env.example to .env and set at least one provider's client ID and secret."
+    }
+  },
+  "faq": {
+    "title": "FAQ",
+    "subtitle": "Common questions about how Charity Link works.",
+    "footer": "Still have questions?",
+    "footerSignIn": "Sign in",
+    "footerTail": "to update your profile contact details.",
+    "items": [
+      {
+        "q": "What is Charity Link?",
+        "a": "Charity Link connects contributors who want to donate gently used items with local charity organizations that support people in need, including children in orphanages."
+      },
+      {
+        "q": "How do I donate items?",
+        "a": "Create a donation list, add items with photos and descriptions, then submit the list. Charity Link routes your list to a local charity based on your location."
+      },
+      {
+        "q": "How is my donation list matched to a charity?",
+        "a": "When you submit a list, the app selects a charity organization using your contributor location and the app’s routing rules, so nearby charities receive relevant donations."
+      },
+      {
+        "q": "What happens after I submit a donation list?",
+        "a": "The charity reviews each item, then can send you a response. You’ll get a notification (including WhatsApp when available) and can view their message and contact details."
+      },
+      {
+        "q": "How do I contact the charity after they respond?",
+        "a": "On your donation lists page, open a reviewed list and use Contact Charity to view their profile, including WhatsApp, phone, email, and address."
+      },
+      {
+        "q": "I’m a charity organization. How do I get started?",
+        "a": "Please contact the site administrator +62 8170778474",
+        "whatsappE164": "628170778474"
+      },
+      {
+        "q": "Can I share Charity Link with others?",
+        "a": "Yes. On the contributor home page you can share Charity Link with friends, family, and your community using WhatsApp, Instagram, email, and other channels."
+      }
+    ]
+  },
+  "dashboard": {
+    "welcome": "Welcome",
+    "signedInAs": "You are signed in as a",
+    "charityRole": "Charity organization",
+    "profileHint": "Use the",
+    "profileLink": "profile",
+    "profileHintTail": "page to view or edit your details.",
+    "startDonating": "Start Donating",
+    "contributorFallback": "Contributor",
+    "greeting": "Hi {name}, thank you for using the Charity Link app. Charity Link helps connect you with a local charity to help you donate your gently used items to help those in need. There are many local orphanages that need your kindness and support to help all the children in need. Please give whatever you can, every little bit helps.",
+    "sharePrompt": "Thanks again and please spread the word and share this to your friends, family, community!"
+  },
+  "howItWorks": {
+    "aria": "How Charity Link works",
+    "title": "How it works",
+    "stepOf": "Step {n} of {total}",
+    "next": "Next",
+    "steps": [
+      {
+        "title": "Create an account",
+        "description": "The contributor creates an account to get started with Charity Link.",
+        "alt": "Contributor creating an account"
+      },
+      {
+        "title": "Build your donation list",
+        "description": "The contributor creates a donation list and adds donation items.",
+        "alt": "Contributor adding items to a donation list"
+      },
+      {
+        "title": "Submit your list",
+        "description": "The contributor submits the donation list.",
+        "alt": "Contributor submitting a donation list"
+      },
+      {
+        "title": "Sent to a nearby charity",
+        "description": "The donation list gets sent to a nearby orphanage / charity.",
+        "alt": "Donation list sent to a nearby charity"
+      },
+      {
+        "title": "Charity reviews and responds",
+        "description": "The charity reviews the items, confirms their needs, and responds to the contributor.",
+        "alt": "Charity reviewing donation items"
+      },
+      {
+        "title": "Coordinate delivery",
+        "description": "The contributor then contacts the charity and coordinates a delivery time.",
+        "alt": "Contributor coordinating delivery with the charity"
+      },
+      {
+        "title": "Send your donation",
+        "description": "The contributor sends the donation to the charity.",
+        "alt": "Contributor delivering donations to the charity"
+      }
+    ]
+  },
+  "onboarding": {
+    "roleIntro": "Create a Contributor account to connect to a local charity to easily donate your gently used items. Thank you for your generosity and support.",
+    "begin": "Begin",
+    "profileTitle": "Your profile",
+    "profileSubtitleCharity": "Enter your organization details.",
+    "profileSubtitleContributor": "Enter your name, location, and WhatsApp number.",
+    "saveContinue": "Save and continue"
+  },
+  "profile": {
+    "title": "Your profile",
+    "subtitle": "View and update the information you provided at signup.",
+    "thankYou": "Thank You",
+    "gotoPhotos": "Goto photos",
+    "signOut": "Sign out",
+    "photosTitle": "Photos",
+    "saved": "Profile saved.",
+    "saveChanges": "Save changes",
+    "orgName": "Organization name",
+    "address": "Address",
+    "whatsapp": "WhatsApp number",
+    "phone": "Phone number",
+    "email": "Email",
+    "name": "Name",
+    "location": "Location",
+    "locationPlaceholder": "Select a location",
+    "digitsPlaceholder": "Digits only"
+  },
+  "donationLists": {
+    "title": "Donation lists",
+    "subtitle": "Create and manage your donation lists.",
+    "new": "New donation list",
+    "empty": "You have no donation lists yet.",
+    "createOne": "Create one",
+    "created": "Created {date}",
+    "charityLabel": "Charity:",
+    "charityFallback": "Charity organization",
+    "messageFromCharity": "Message from charity",
+    "contactCharity": "Contact Charity",
+    "submit": "Submit list",
+    "remove": "Remove",
+    "back": "← Back to donation lists",
+    "newTitle": "New donation list",
+    "newHelp": "Enter a name. Status starts as \"Not submitted\". Add items next.",
+    "fieldName": "Name",
+    "namePlaceholder": "e.g. Winter food drive",
+    "create": "Create list",
+    "addItem": "Add donation list item",
+    "fieldStatus": "Status",
+    "fieldCreated": "Created",
+    "itemsTitle": "Items",
+    "itemsEmpty": "No items yet. Use \"Add donation list item\" to add one.",
+    "itemAdded": "Added {date}",
+    "charityResponse": "Charity response:",
+    "removeItem": "Remove item",
+    "itemBack": "← Back to list",
+    "addItemTitle": "Add donation list item",
+    "addItemHelp": "Enter a description and at least one image (up to two).",
+    "description": "Description",
+    "descriptionPlaceholder": "Describe this donation item…",
+    "imagesLabel": "Images (1 required, up to 2)",
+    "imagesHelp": "JPEG, PNG, WebP, or GIF. Up to 2.5 MB each after compression.",
+    "image1": "Image 1",
+    "image2": "Image 2 (optional)",
+    "processing": "Processing…",
+    "saveItem": "Save item"
+  },
+  "masterLists": {
+    "title": "Master donation lists",
+    "subtitle": "Submitted donation lists from contributors.",
+    "empty": "No submitted donation lists yet.",
+    "created": "Created {date}",
+    "completed": "Completed {date}",
+    "contributorLabel": "Contributor:",
+    "respond": "Respond To Contributor",
+    "giveThanks": "Give Thanks",
+    "back": "← Back to master donation lists",
+    "fieldStatus": "Status",
+    "fieldCreated": "Created",
+    "fieldContributor": "Contributor",
+    "contributorFallback": "Contributor",
+    "itemsTitle": "Items",
+    "itemsEmpty": "This list has no items.",
+    "itemAdded": "Added {date}",
+    "yourReview": "Your review:",
+    "reviewLabel": "Charity review",
+    "reviewLegend": "Accept or not accept this item",
+    "saving": "Saving…",
+    "viewList": "View list",
+    "respondTitle": "Respond To Contributor",
+    "listLabel": "List:",
+    "lastUpdated": "Last updated {date}",
+    "messageLabel": "Message to contributor",
+    "sendResponse": "Send response"
+  },
+  "photos": {
+    "back": "← Back",
+    "title": "{name} photos",
+    "fallbackName": "Charity",
+    "empty": "No photos yet.",
+    "alt": "Photo",
+    "viewFull": "View full image",
+    "close": "Close",
+    "remove": "Remove",
+    "removeConfirm": "Are you sure you want to remove this photo?",
+    "yes": "Yes",
+    "no": "No",
+    "addOpen": "Add a new photo",
+    "addTitle": "Add a photo",
+    "image": "Image",
+    "caption": "Caption (max 50 characters)",
+    "saving": "Saving…",
+    "save": "Save",
+    "deleteConfirm": "Are you sure you want to delete this photo? This cannot be undone.",
+    "delete": "Delete"
+  },
+  "photoCapture": {
+    "takePhoto": "Take Photo",
+    "uploadPhoto": "Upload Photo",
+    "selected": "Selected:",
+    "takeAPhoto": "Take a photo",
+    "capture": "Capture",
+    "confirmPhoto": "Confirm photo",
+    "takeAnother": "Take Another",
+    "useThisPhoto": "Use This Photo",
+    "cameraUnavailable": "Camera is not available on this device or permission was denied."
+  },
+  "thankYou": {
+    "back": "← Back to profile",
+    "title": "Thank You",
+    "subtitle": "Contributors who completed donations with your organization.",
+    "empty": "No completed donation lists yet. Use Give Thanks on a reviewed list to add it here.",
+    "noImage": "No image",
+    "card": "Thank you {name} for your generosity."
+  },
+  "publicProfile": {
+    "contributorBack": "← Back to master donation lists",
+    "contributorTitle": "Contributor profile",
+    "contributorSubtitle": "Read-only view. This page is visible to charity organizations only.",
+    "name": "Name",
+    "whatsapp": "WhatsApp number",
+    "charityBack": "← Back",
+    "charityTitle": "Charity organization profile",
+    "charitySubtitle": "Read-only view.",
+    "orgName": "Organization name",
+    "address": "Address",
+    "location": "Location",
+    "whatsappHint": "Whatsapp is the preferred way to communicate with the charity organization.",
+    "phone": "Phone number",
+    "email": "Email",
+    "charityFallback": "Charity organization",
+    "contributorFallback": "Contributor",
+    "thankYous": "Thank-yous",
+    "photos": "Photos"
+  },
+  "publicThankYous": {
+    "back": "← Back to charity profile",
+    "title": "{name} thank-yous",
+    "fallbackName": "Charity",
+    "subtitle": "Contributors who completed donations with this organization.",
+    "empty": "No completed donation lists yet.",
+    "noImage": "No image",
+    "card": "Thank you {name} for your generosity."
+  },
+  "contributorThankYou": {
+    "title": "Thank you",
+    "message": "Thank you {name} for your generosity.",
+    "shareLink": "Share this kindness",
+    "shareBack": "← Back",
+    "shareTitle": "Share kindness",
+    "shareSubtitle": "Share this message with your friends and community.",
+    "shareText": "You can continue {name}'s kindness and help those in need. Join TheCharityLink.org"
+  },
+  "share": {
+    "defaultTitle": "Charity Link",
+    "defaultText": "I found Charity Link - a simple way to donate gently used items to local charities helping children in need. Check it out:",
+    "title": "Share Charity Link",
+    "subtitle": "Invite friends and family to donate with you.",
+    "hintWhatsapp": "Message copied. If WhatsApp only shows the link, paste the message into the chat.",
+    "hintInstagram": "Message copied. Instagram does not allow prefilled posts — paste into your story or message.",
+    "hintInstagramFail": "Could not copy the message. Please copy it manually.",
+    "whatsapp": "WhatsApp",
+    "instagram": "Instagram",
+    "facebook": "Facebook",
+    "x": "X",
+    "email": "Email",
+    "copy": "Copy message",
+    "copied": "Copied!"
+  }
+}

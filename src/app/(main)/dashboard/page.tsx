@@ -1,6 +1,9 @@
 import Link from "next/link";
 
 import { ShareWidget } from "@/components/share-widget";
+import { getDictionary } from "@/i18n/get-dictionary";
+import { getLocale } from "@/i18n/get-locale";
+import { t } from "@/i18n/t";
 import { appPublicOrigin } from "@/lib/app-public-url";
 import { requireUserId, getOrCreateProfile } from "@/lib/auth-server";
 
@@ -9,19 +12,25 @@ import { HowItWorksWizard } from "./how-it-works-wizard";
 export default async function DashboardPage() {
   const userId = await requireUserId();
   const profile = await getOrCreateProfile(userId);
+  const locale = await getLocale();
+  const dict = await getDictionary(locale);
 
   const isCharity = profile.role === "CHARITY_ORGANIZATION";
   const title = isCharity ? profile.organizationName : profile.displayName;
-  const contributorName = profile.displayName?.trim() || "Contributor";
+  const contributorName =
+    profile.displayName?.trim() || t(dict, "dashboard.contributorFallback");
   const appUrl = appPublicOrigin();
 
   return (
     <main>
       {isCharity ? (
         <>
-          <h1 className="text-2xl font-bold text-slate-900">Welcome</h1>
+          <h1 className="text-2xl font-bold text-slate-900">
+            {t(dict, "dashboard.welcome")}
+          </h1>
           <p className="mt-2 text-slate-600">
-            You are signed in as a <strong>Charity organization</strong>
+            {t(dict, "dashboard.signedInAs")}{" "}
+            <strong>{t(dict, "dashboard.charityRole")}</strong>
             {title ? (
               <>
                 : <strong>{title}</strong>
@@ -30,11 +39,11 @@ export default async function DashboardPage() {
             .
           </p>
           <p className="mt-6 text-sm text-slate-500">
-            Use the{" "}
+            {t(dict, "dashboard.profileHint")}{" "}
             <Link className="underline" href="/profile">
-              profile
+              {t(dict, "dashboard.profileLink")}
             </Link>{" "}
-            page to view or edit your details.
+            {t(dict, "dashboard.profileHintTail")}
           </p>
         </>
       ) : (
@@ -43,19 +52,13 @@ export default async function DashboardPage() {
             href="/donation-lists/new"
             className="inline-flex rounded-lg bg-slate-900 px-5 py-3 text-base font-medium text-white hover:bg-slate-800"
           >
-            Start Donating
+            {t(dict, "dashboard.startDonating")}
           </Link>
           <p className="mt-6 text-slate-700">
-            Hi {contributorName}, thank you for using the Charity Link app.
-            Charity Link helps connect you with a local charity to help you
-            donate your gently used items to help those in need. There are many
-            local orphanages that need your kindness and support to help all
-            the children in need. Please give whatever you can, every little
-            bit helps.
+            {t(dict, "dashboard.greeting", { name: contributorName })}
           </p>
           <p className="mt-4 text-slate-700">
-            Thanks again and please spread the word and share this to your
-            friends, family, community!
+            {t(dict, "dashboard.sharePrompt")}
           </p>
           <HowItWorksWizard />
           <div className="mt-10">

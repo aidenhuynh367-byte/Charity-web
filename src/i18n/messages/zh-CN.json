@@ -1,0 +1,325 @@
+{
+  "brand": {
+    "name": "TheCharityLink.org",
+    "alt": "Charity Link"
+  },
+  "nav": {
+    "home": "首页",
+    "signIn": "登录",
+    "faq": "常见问题",
+    "donationLists": "捐赠清单",
+    "masterDonationLists": "主捐赠清单",
+    "profile": "个人资料",
+    "language": "语言"
+  },
+  "common": {
+    "cancel": "取消",
+    "back": "← 返回",
+    "emDash": "—",
+    "loading": "加载中…",
+    "errorTitle": "出错了",
+    "errorCode": "错误代码：{code}"
+  },
+  "status": {
+    "NOT_SUBMITTED": "未提交",
+    "SUBMITTED": "已提交",
+    "REVIEWED": "已审核",
+    "COMPLETED": "已完成"
+  },
+  "decision": {
+    "accept": "接受",
+    "notAccept": "不接受"
+  },
+  "login": {
+    "intro": "Charity Link 是一款帮助您与当地慈善机构建立联系的应用，让您能够捐赠闲置但仍完好的物品，帮助有需要的人。许多当地孤儿院需要您的善意与支持，以帮助所有有需要的孩子。请加入我们，尽您所能地捐赠——每一份小小的帮助都很重要。谢谢您。",
+    "google": "使用 Google 登录",
+    "microsoft": "使用 Microsoft 继续",
+    "error": {
+      "staleSession": "在数据库中找不到您的账户（或会话已过期）。请重新登录。",
+      "database": "无法连接数据库。请检查 DATABASE_URL，确保 Postgres 正在运行，然后重启开发服务器。",
+      "migration": "缺少数据库表。请在项目文件夹中运行：npx prisma migrate dev（或 npx prisma db push）。",
+      "noProviders": "未配置 OAuth 提供商。请将 .env.example 复制为 .env，并至少设置一个提供商的客户端 ID 和密钥。"
+    }
+  },
+  "faq": {
+    "title": "常见问题",
+    "subtitle": "关于 Charity Link 如何运作的常见问题。",
+    "footer": "还有其他问题？",
+    "footerSignIn": "登录",
+    "footerTail": "以更新您的个人资料联系方式。",
+    "items": [
+      {
+        "q": "什么是 Charity Link？",
+        "a": "Charity Link 将希望捐赠闲置但仍完好物品的捐赠者，与支持有需要人士（包括孤儿院儿童）的当地慈善机构联系起来。"
+      },
+      {
+        "q": "我如何捐赠物品？",
+        "a": "创建捐赠清单，添加带有照片和说明的物品，然后提交清单。Charity Link 会根据您的位置将清单分配给当地慈善机构。"
+      },
+      {
+        "q": "我的捐赠清单如何匹配到慈善机构？",
+        "a": "当您提交清单时，应用会根据捐赠者的位置和应用的路由规则选择慈善机构，以便附近的机构收到相关捐赠。"
+      },
+      {
+        "q": "提交捐赠清单后会发生什么？",
+        "a": "慈善机构会审核每件物品，然后可以向您发送回复。您将收到通知（在可用时包括 WhatsApp），并可查看他们的消息和联系方式。"
+      },
+      {
+        "q": "慈善机构回复后，我如何联系他们？",
+        "a": "在捐赠清单页面打开已审核的清单，使用“联系慈善机构”查看其资料，包括 WhatsApp、电话、邮箱和地址。"
+      },
+      {
+        "q": "我是慈善机构。如何开始？",
+        "a": "请联系网站管理员 +62 8170778474",
+        "whatsappE164": "628170778474"
+      },
+      {
+        "q": "我可以把 Charity Link 分享给别人吗？",
+        "a": "可以。在捐赠者首页，您可以通过 WhatsApp、Instagram、电子邮件及其他渠道与朋友、家人和社区分享 Charity Link。"
+      }
+    ]
+  },
+  "dashboard": {
+    "welcome": "欢迎",
+    "signedInAs": "您当前登录身份为",
+    "charityRole": "慈善机构",
+    "profileHint": "使用",
+    "profileLink": "个人资料",
+    "profileHintTail": "页面查看或编辑您的详细信息。",
+    "startDonating": "开始捐赠",
+    "contributorFallback": "捐赠者",
+    "greeting": "你好 {name}，感谢您使用 Charity Link 应用。Charity Link 帮助您与当地慈善机构建立联系，以便捐赠闲置但仍完好的物品，帮助有需要的人。许多当地孤儿院需要您的善意与支持，以帮助所有有需要的孩子。请尽您所能地捐赠——每一份小小的帮助都很重要。",
+    "sharePrompt": "再次感谢您，也请向朋友、家人和社区传播并分享这个应用！"
+  },
+  "howItWorks": {
+    "aria": "Charity Link 如何运作",
+    "title": "使用流程",
+    "stepOf": "第 {n} 步，共 {total} 步",
+    "next": "下一步",
+    "steps": [
+      {
+        "title": "创建账户",
+        "description": "捐赠者创建账户，开始使用 Charity Link。",
+        "alt": "捐赠者正在创建账户"
+      },
+      {
+        "title": "创建捐赠清单",
+        "description": "捐赠者创建捐赠清单并添加捐赠物品。",
+        "alt": "捐赠者正在向捐赠清单添加物品"
+      },
+      {
+        "title": "提交清单",
+        "description": "捐赠者提交捐赠清单。",
+        "alt": "捐赠者正在提交捐赠清单"
+      },
+      {
+        "title": "发送至附近的慈善机构",
+        "description": "捐赠清单会发送至附近的孤儿院 / 慈善机构。",
+        "alt": "捐赠清单已发送至附近的慈善机构"
+      },
+      {
+        "title": "慈善机构审核并回复",
+        "description": "慈善机构审核物品、确认需求，并向捐赠者回复。",
+        "alt": "慈善机构正在审核捐赠物品"
+      },
+      {
+        "title": "协调送达时间",
+        "description": "捐赠者随后联系慈善机构并协调送达时间。",
+        "alt": "捐赠者正在与慈善机构协调送达"
+      },
+      {
+        "title": "送出捐赠",
+        "description": "捐赠者将捐赠物品送至慈善机构。",
+        "alt": "捐赠者正在向慈善机构交付捐赠"
+      }
+    ]
+  },
+  "onboarding": {
+    "roleIntro": "创建捐赠者账户，与当地慈善机构建立联系，轻松捐赠闲置但仍完好的物品。感谢您的慷慨与支持。",
+    "begin": "开始",
+    "profileTitle": "您的个人资料",
+    "profileSubtitleCharity": "请输入您的机构信息。",
+    "profileSubtitleContributor": "请输入您的姓名、位置和 WhatsApp 号码。",
+    "saveContinue": "保存并继续"
+  },
+  "profile": {
+    "title": "您的个人资料",
+    "subtitle": "查看并更新您在注册时提供的信息。",
+    "thankYou": "感谢",
+    "gotoPhotos": "前往照片",
+    "signOut": "退出登录",
+    "photosTitle": "照片",
+    "saved": "个人资料已保存。",
+    "saveChanges": "保存更改",
+    "orgName": "机构名称",
+    "address": "地址",
+    "whatsapp": "WhatsApp 号码",
+    "phone": "电话号码",
+    "email": "电子邮箱",
+    "name": "姓名",
+    "location": "位置",
+    "locationPlaceholder": "选择位置",
+    "digitsPlaceholder": "仅填写数字"
+  },
+  "donationLists": {
+    "title": "捐赠清单",
+    "subtitle": "创建并管理您的捐赠清单。",
+    "new": "新建捐赠清单",
+    "empty": "您还没有捐赠清单。",
+    "createOne": "创建一份",
+    "created": "创建于 {date}",
+    "charityLabel": "慈善机构：",
+    "charityFallback": "慈善机构",
+    "messageFromCharity": "来自慈善机构的消息",
+    "contactCharity": "联系慈善机构",
+    "submit": "提交清单",
+    "remove": "删除",
+    "back": "← 返回捐赠清单",
+    "newTitle": "新建捐赠清单",
+    "newHelp": "输入名称。状态初始为“未提交”。接下来添加物品。",
+    "fieldName": "名称",
+    "namePlaceholder": "例如：冬季食物捐赠",
+    "create": "创建清单",
+    "addItem": "添加捐赠清单物品",
+    "fieldStatus": "状态",
+    "fieldCreated": "创建时间",
+    "itemsTitle": "物品",
+    "itemsEmpty": "暂无物品。请使用“添加捐赠清单物品”来添加。",
+    "itemAdded": "添加于 {date}",
+    "charityResponse": "慈善机构回复：",
+    "removeItem": "删除物品",
+    "itemBack": "← 返回清单",
+    "addItemTitle": "添加捐赠清单物品",
+    "addItemHelp": "输入说明，并至少上传一张图片（最多两张）。",
+    "description": "说明",
+    "descriptionPlaceholder": "描述这件捐赠物品…",
+    "imagesLabel": "图片（至少 1 张，最多 2 张）",
+    "imagesHelp": "JPEG、PNG、WebP 或 GIF。压缩后每张最多 2.5 MB。",
+    "image1": "图片 1",
+    "image2": "图片 2（可选）",
+    "processing": "处理中…",
+    "saveItem": "保存物品"
+  },
+  "masterLists": {
+    "title": "主捐赠清单",
+    "subtitle": "捐赠者提交的捐赠清单。",
+    "empty": "尚无已提交的捐赠清单。",
+    "created": "创建于 {date}",
+    "completed": "完成于 {date}",
+    "contributorLabel": "捐赠者：",
+    "respond": "回复捐赠者",
+    "giveThanks": "表达感谢",
+    "back": "← 返回主捐赠清单",
+    "fieldStatus": "状态",
+    "fieldCreated": "创建时间",
+    "fieldContributor": "捐赠者",
+    "contributorFallback": "捐赠者",
+    "itemsTitle": "物品",
+    "itemsEmpty": "此清单没有物品。",
+    "itemAdded": "添加于 {date}",
+    "yourReview": "您的审核：",
+    "reviewLabel": "慈善机构审核",
+    "reviewLegend": "接受或不接受此物品",
+    "saving": "保存中…",
+    "viewList": "查看清单",
+    "respondTitle": "回复捐赠者",
+    "listLabel": "清单：",
+    "lastUpdated": "最后更新于 {date}",
+    "messageLabel": "给捐赠者的消息",
+    "sendResponse": "发送回复"
+  },
+  "photos": {
+    "back": "← 返回",
+    "title": "{name} 的照片",
+    "fallbackName": "慈善机构",
+    "empty": "暂无照片。",
+    "alt": "照片",
+    "viewFull": "查看完整图片",
+    "close": "关闭",
+    "remove": "移除",
+    "removeConfirm": "确定要移除此照片吗？",
+    "yes": "是",
+    "no": "否",
+    "addOpen": "添加新照片",
+    "addTitle": "添加照片",
+    "image": "图片",
+    "caption": "说明（最多 50 个字符）",
+    "saving": "保存中…",
+    "save": "保存",
+    "deleteConfirm": "确定要删除这张照片吗？此操作无法撤销。",
+    "delete": "删除"
+  },
+  "photoCapture": {
+    "takePhoto": "拍照",
+    "uploadPhoto": "上传照片",
+    "selected": "已选择：",
+    "takeAPhoto": "拍摄照片",
+    "capture": "拍摄",
+    "confirmPhoto": "确认照片",
+    "takeAnother": "再拍一张",
+    "useThisPhoto": "使用这张照片",
+    "cameraUnavailable": "此设备无法使用相机，或权限被拒绝。"
+  },
+  "thankYou": {
+    "back": "← 返回个人资料",
+    "title": "感谢",
+    "subtitle": "已与您的机构完成捐赠的捐赠者。",
+    "empty": "尚无已完成的捐赠清单。请在已审核的清单上使用“表达感谢”将其添加到此处。",
+    "noImage": "无图片",
+    "card": "感谢 {name} 的慷慨捐赠。"
+  },
+  "publicProfile": {
+    "contributorBack": "← 返回主捐赠清单",
+    "contributorTitle": "捐赠者资料",
+    "contributorSubtitle": "只读视图。此页面仅对慈善机构可见。",
+    "name": "姓名",
+    "whatsapp": "WhatsApp 号码",
+    "charityBack": "← 返回",
+    "charityTitle": "慈善机构资料",
+    "charitySubtitle": "只读视图。",
+    "orgName": "机构名称",
+    "address": "地址",
+    "location": "位置",
+    "whatsappHint": "WhatsApp 是与慈善机构沟通的首选方式。",
+    "phone": "电话号码",
+    "email": "电子邮箱",
+    "charityFallback": "慈善机构",
+    "contributorFallback": "捐赠者",
+    "thankYous": "感谢留言",
+    "photos": "照片"
+  },
+  "publicThankYous": {
+    "back": "← 返回慈善机构资料",
+    "title": "{name} 的感谢留言",
+    "fallbackName": "慈善机构",
+    "subtitle": "已与该机构完成捐赠的捐赠者。",
+    "empty": "尚无已完成的捐赠清单。",
+    "noImage": "无图片",
+    "card": "感谢 {name} 的慷慨捐赠。"
+  },
+  "contributorThankYou": {
+    "title": "谢谢您",
+    "message": "感谢 {name} 的慷慨捐赠。",
+    "shareLink": "分享这份善意",
+    "shareBack": "← 返回",
+    "shareTitle": "分享善意",
+    "shareSubtitle": "与朋友和社区分享这条消息。",
+    "shareText": "您可以延续 {name} 的善意，帮助有需要的人。加入 TheCharityLink.org"
+  },
+  "share": {
+    "defaultTitle": "Charity Link",
+    "defaultText": "我发现了 Charity Link——一种将闲置但仍完好的物品捐赠给当地慈善机构、帮助有需要儿童的简单方式。来看看吧：",
+    "title": "分享 Charity Link",
+    "subtitle": "邀请朋友和家人一起捐赠。",
+    "hintWhatsapp": "消息已复制。如果 WhatsApp 只显示链接，请将消息粘贴到聊天中。",
+    "hintInstagram": "消息已复制。Instagram 不允许预填帖子——请粘贴到您的快拍或私信中。",
+    "hintInstagramFail": "无法复制消息。请手动复制。",
+    "whatsapp": "WhatsApp",
+    "instagram": "Instagram",
+    "facebook": "Facebook",
+    "x": "X",
+    "email": "电子邮箱",
+    "copy": "复制消息",
+    "copied": "已复制！"
+  }
+}

@@ -68,6 +68,5 @@ export async function deleteCharityImage(formData: FormData) {
 
   revalidatePath("/profile");
   revalidatePath(`/profile/${userId}/photos`);
-  redirect(`/profile/${userId}/photos`);
 }
 

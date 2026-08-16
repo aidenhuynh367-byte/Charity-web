@@ -3,6 +3,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import { getDictionary } from "@/i18n/get-dictionary";
+import { getLocale } from "@/i18n/get-locale";
+import { t } from "@/i18n/t";
 import { contributorLabel } from "@/lib/contributor-label";
 import {
   listDonationThankYouImages,
@@ -14,6 +17,8 @@ type Props = { params: Promise<{ userId: string }> };
 
 export default async function CharityThankYousPage({ params }: Props) {
   const { userId: targetUserId } = await params;
+  const locale = await getLocale();
+  const dict = await getDictionary(locale);
 
   const target = await prisma.user.findUnique({
     where: { id: targetUserId },
@@ -29,7 +34,7 @@ export default async function CharityThankYousPage({ params }: Props) {
   const charityName =
     target.profile.organizationName?.trim() ||
     target.name?.trim() ||
-    "Charity";
+    t(dict, "publicThankYous.fallbackName");
 
   const lists = await prisma.donationList.findMany({
     where: {
@@ -50,18 +55,18 @@ export default async function CharityThankYousPage({ params }: Props) {
         href={`/profile/${targetUserId}`}
         className="text-sm font-medium text-slate-600 hover:text-slate-900"
       >
-        ← Back to charity profile
+        {t(dict, "publicThankYous.back")}
       </Link>
       <h1 className="mt-4 text-2xl font-bold text-slate-900">
-        {charityName} thank-yous
+        {t(dict, "publicThankYous.title", { name: charityName })}
       </h1>
       <p className="mt-2 text-sm text-slate-600">
-        Contributors who completed donations with this organization.
+        {t(dict, "publicThankYous.subtitle")}
       </p>
 
       {lists.length === 0 ? (
         <p className="mt-10 text-sm text-slate-600">
-          No completed donation lists yet.
+          {t(dict, "publicThankYous.empty")}
         </p>
       ) : (
         <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -86,11 +91,11 @@ export default async function CharityThankYousPage({ params }: Props) {
                   </div>
                 ) : (
                   <div className="flex aspect-square items-center justify-center bg-slate-100 text-sm text-slate-500">
-                    No image
+                    {t(dict, "publicThankYous.noImage")}
                   </div>
                 )}
                 <p className="px-3 py-3 text-center text-sm text-slate-800">
-                  Thank you {name} for your generosity.
+                  {t(dict, "publicThankYous.card", { name })}
                 </p>
               </Link>
             );

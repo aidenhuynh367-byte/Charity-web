@@ -1,0 +1,325 @@
+{
+  "brand": {
+    "name": "TheCharityLink.org",
+    "alt": "Charity Link"
+  },
+  "nav": {
+    "home": "Beranda",
+    "signIn": "Masuk",
+    "faq": "FAQ",
+    "donationLists": "Daftar donasi",
+    "masterDonationLists": "Daftar donasi utama",
+    "profile": "Profil",
+    "language": "Bahasa"
+  },
+  "common": {
+    "cancel": "Batal",
+    "back": "← Kembali",
+    "emDash": "—",
+    "loading": "Memuat…",
+    "errorTitle": "Terjadi kesalahan",
+    "errorCode": "Kode kesalahan: {code}"
+  },
+  "status": {
+    "NOT_SUBMITTED": "Belum dikirim",
+    "SUBMITTED": "Telah dikirim",
+    "REVIEWED": "Telah ditinjau",
+    "COMPLETED": "Selesai"
+  },
+  "decision": {
+    "accept": "Terima",
+    "notAccept": "Tidak terima"
+  },
+  "login": {
+    "intro": "Charity Link adalah aplikasi yang membantu menghubungkan Anda dengan lembaga amal lokal agar Anda dapat menyumbangkan barang bekas yang masih layak pakai untuk membantu mereka yang membutuhkan. Banyak panti asuhan lokal yang membutuhkan kebaikan dan dukungan Anda untuk membantu semua anak yang membutuhkan. Bergabunglah dengan kami dan berikan apa pun yang Anda bisa; setiap bantuan kecil berarti. Terima kasih.",
+    "google": "Masuk dengan Google",
+    "microsoft": "Lanjutkan dengan Microsoft",
+    "error": {
+      "staleSession": "Akun Anda tidak ditemukan di database (atau sesi sudah kedaluwarsa). Silakan masuk lagi.",
+      "database": "Tidak dapat terhubung ke database. Periksa DATABASE_URL, pastikan Postgres berjalan, lalu mulai ulang server pengembangan.",
+      "migration": "Tabel database belum ada. Dari folder proyek jalankan: npx prisma migrate dev (atau npx prisma db push).",
+      "noProviders": "Tidak ada penyedia OAuth yang dikonfigurasi. Salin .env.example ke .env dan atur setidaknya satu client ID serta secret penyedia."
+    }
+  },
+  "faq": {
+    "title": "FAQ",
+    "subtitle": "Pertanyaan umum tentang cara kerja Charity Link.",
+    "footer": "Masih punya pertanyaan?",
+    "footerSignIn": "Masuk",
+    "footerTail": "untuk memperbarui detail kontak profil Anda.",
+    "items": [
+      {
+        "q": "Apa itu Charity Link?",
+        "a": "Charity Link menghubungkan kontributor yang ingin menyumbangkan barang bekas yang masih layak pakai dengan lembaga amal lokal yang mendukung orang-orang yang membutuhkan, termasuk anak-anak di panti asuhan."
+      },
+      {
+        "q": "Bagaimana cara menyumbangkan barang?",
+        "a": "Buat daftar donasi, tambahkan barang beserta foto dan deskripsinya, lalu kirim daftar tersebut. Charity Link akan mengarahkan daftar Anda ke lembaga amal lokal berdasarkan lokasi Anda."
+      },
+      {
+        "q": "Bagaimana daftar donasi saya dicocokkan dengan lembaga amal?",
+        "a": "Saat Anda mengirim daftar, aplikasi memilih lembaga amal menggunakan lokasi kontributor dan aturan perutean aplikasi, sehingga lembaga amal terdekat menerima donasi yang relevan."
+      },
+      {
+        "q": "Apa yang terjadi setelah saya mengirim daftar donasi?",
+        "a": "Lembaga amal meninjau setiap barang, lalu dapat mengirimkan tanggapan kepada Anda. Anda akan menerima notifikasi (termasuk WhatsApp jika tersedia) dan dapat melihat pesan serta detail kontak mereka."
+      },
+      {
+        "q": "Bagaimana cara menghubungi lembaga amal setelah mereka merespons?",
+        "a": "Di halaman daftar donasi Anda, buka daftar yang telah ditinjau dan gunakan Hubungi Lembaga Amal untuk melihat profil mereka, termasuk WhatsApp, telepon, email, dan alamat."
+      },
+      {
+        "q": "Saya adalah lembaga amal. Bagaimana cara memulai?",
+        "a": "Silakan hubungi administrator situs +62 8170778474",
+        "whatsappE164": "628170778474"
+      },
+      {
+        "q": "Bisakah saya membagikan Charity Link kepada orang lain?",
+        "a": "Ya. Di beranda kontributor Anda dapat membagikan Charity Link kepada teman, keluarga, dan komunitas melalui WhatsApp, Instagram, email, dan saluran lainnya."
+      }
+    ]
+  },
+  "dashboard": {
+    "welcome": "Selamat datang",
+    "signedInAs": "Anda masuk sebagai",
+    "charityRole": "Lembaga amal",
+    "profileHint": "Gunakan halaman",
+    "profileLink": "profil",
+    "profileHintTail": "untuk melihat atau mengedit detail Anda.",
+    "startDonating": "Mulai Berdonasi",
+    "contributorFallback": "Kontributor",
+    "greeting": "Hai {name}, terima kasih telah menggunakan aplikasi Charity Link. Charity Link membantu menghubungkan Anda dengan lembaga amal lokal agar Anda dapat menyumbangkan barang bekas yang masih layak pakai untuk membantu mereka yang membutuhkan. Banyak panti asuhan lokal yang membutuhkan kebaikan dan dukungan Anda untuk membantu semua anak yang membutuhkan. Berikan apa pun yang Anda bisa; setiap bantuan kecil berarti.",
+    "sharePrompt": "Terima kasih sekali lagi, dan silakan sebarkan berita ini serta bagikan kepada teman, keluarga, dan komunitas Anda!"
+  },
+  "howItWorks": {
+    "aria": "Cara kerja Charity Link",
+    "title": "Cara kerjanya",
+    "stepOf": "Langkah {n} dari {total}",
+    "next": "Berikutnya",
+    "steps": [
+      {
+        "title": "Buat akun",
+        "description": "Kontributor membuat akun untuk memulai dengan Charity Link.",
+        "alt": "Kontributor sedang membuat akun"
+      },
+      {
+        "title": "Buat daftar donasi Anda",
+        "description": "Kontributor membuat daftar donasi dan menambahkan barang donasi.",
+        "alt": "Kontributor menambahkan barang ke daftar donasi"
+      },
+      {
+        "title": "Kirim daftar Anda",
+        "description": "Kontributor mengirim daftar donasi.",
+        "alt": "Kontributor mengirim daftar donasi"
+      },
+      {
+        "title": "Dikirim ke lembaga amal terdekat",
+        "description": "Daftar donasi dikirim ke panti asuhan / lembaga amal terdekat.",
+        "alt": "Daftar donasi dikirim ke lembaga amal terdekat"
+      },
+      {
+        "title": "Lembaga amal meninjau dan merespons",
+        "description": "Lembaga amal meninjau barang, mengonfirmasi kebutuhan mereka, dan merespons kontributor.",
+        "alt": "Lembaga amal meninjau barang donasi"
+      },
+      {
+        "title": "Atur pengiriman",
+        "description": "Kontributor kemudian menghubungi lembaga amal dan mengatur waktu pengiriman.",
+        "alt": "Kontributor mengatur pengiriman dengan lembaga amal"
+      },
+      {
+        "title": "Kirim donasi Anda",
+        "description": "Kontributor mengirimkan donasi ke lembaga amal.",
+        "alt": "Kontributor mengantarkan donasi ke lembaga amal"
+      }
+    ]
+  },
+  "onboarding": {
+    "roleIntro": "Buat akun Kontributor untuk terhubung dengan lembaga amal lokal dan dengan mudah menyumbangkan barang bekas yang masih layak pakai. Terima kasih atas kedermawanan dan dukungan Anda.",
+    "begin": "Mulai",
+    "profileTitle": "Profil Anda",
+    "profileSubtitleCharity": "Masukkan detail organisasi Anda.",
+    "profileSubtitleContributor": "Masukkan nama, lokasi, dan nomor WhatsApp Anda.",
+    "saveContinue": "Simpan dan lanjutkan"
+  },
+  "profile": {
+    "title": "Profil Anda",
+    "subtitle": "Lihat dan perbarui informasi yang Anda berikan saat mendaftar.",
+    "thankYou": "Terima Kasih",
+    "gotoPhotos": "Ke foto",
+    "signOut": "Keluar",
+    "photosTitle": "Foto",
+    "saved": "Profil disimpan.",
+    "saveChanges": "Simpan perubahan",
+    "orgName": "Nama organisasi",
+    "address": "Alamat",
+    "whatsapp": "Nomor WhatsApp",
+    "phone": "Nomor telepon",
+    "email": "Email",
+    "name": "Nama",
+    "location": "Lokasi",
+    "locationPlaceholder": "Pilih lokasi",
+    "digitsPlaceholder": "Hanya angka"
+  },
+  "donationLists": {
+    "title": "Daftar donasi",
+    "subtitle": "Buat dan kelola daftar donasi Anda.",
+    "new": "Daftar donasi baru",
+    "empty": "Anda belum memiliki daftar donasi.",
+    "createOne": "Buat satu",
+    "created": "Dibuat {date}",
+    "charityLabel": "Lembaga amal:",
+    "charityFallback": "Lembaga amal",
+    "messageFromCharity": "Pesan dari lembaga amal",
+    "contactCharity": "Hubungi Lembaga Amal",
+    "submit": "Kirim daftar",
+    "remove": "Hapus",
+    "back": "← Kembali ke daftar donasi",
+    "newTitle": "Daftar donasi baru",
+    "newHelp": "Masukkan nama. Status dimulai sebagai \"Belum dikirim\". Tambahkan barang selanjutnya.",
+    "fieldName": "Nama",
+    "namePlaceholder": "mis. Donasi makanan musim dingin",
+    "create": "Buat daftar",
+    "addItem": "Tambah item daftar donasi",
+    "fieldStatus": "Status",
+    "fieldCreated": "Dibuat",
+    "itemsTitle": "Item",
+    "itemsEmpty": "Belum ada item. Gunakan \"Tambah item daftar donasi\" untuk menambahkannya.",
+    "itemAdded": "Ditambahkan {date}",
+    "charityResponse": "Tanggapan lembaga amal:",
+    "removeItem": "Hapus item",
+    "itemBack": "← Kembali ke daftar",
+    "addItemTitle": "Tambah item daftar donasi",
+    "addItemHelp": "Masukkan deskripsi dan setidaknya satu gambar (maksimal dua).",
+    "description": "Deskripsi",
+    "descriptionPlaceholder": "Jelaskan item donasi ini…",
+    "imagesLabel": "Gambar (1 wajib, hingga 2)",
+    "imagesHelp": "JPEG, PNG, WebP, atau GIF. Maksimal 2,5 MB masing-masing setelah kompresi.",
+    "image1": "Gambar 1",
+    "image2": "Gambar 2 (opsional)",
+    "processing": "Memproses…",
+    "saveItem": "Simpan item"
+  },
+  "masterLists": {
+    "title": "Daftar donasi utama",
+    "subtitle": "Daftar donasi yang dikirim oleh kontributor.",
+    "empty": "Belum ada daftar donasi yang dikirim.",
+    "created": "Dibuat {date}",
+    "completed": "Selesai {date}",
+    "contributorLabel": "Kontributor:",
+    "respond": "Balas Kontributor",
+    "giveThanks": "Ucapkan Terima Kasih",
+    "back": "← Kembali ke daftar donasi utama",
+    "fieldStatus": "Status",
+    "fieldCreated": "Dibuat",
+    "fieldContributor": "Kontributor",
+    "contributorFallback": "Kontributor",
+    "itemsTitle": "Item",
+    "itemsEmpty": "Daftar ini tidak memiliki item.",
+    "itemAdded": "Ditambahkan {date}",
+    "yourReview": "Tinjauan Anda:",
+    "reviewLabel": "Tinjauan lembaga amal",
+    "reviewLegend": "Terima atau tidak terima item ini",
+    "saving": "Menyimpan…",
+    "viewList": "Lihat daftar",
+    "respondTitle": "Balas Kontributor",
+    "listLabel": "Daftar:",
+    "lastUpdated": "Terakhir diperbarui {date}",
+    "messageLabel": "Pesan untuk kontributor",
+    "sendResponse": "Kirim tanggapan"
+  },
+  "photos": {
+    "back": "← Kembali",
+    "title": "Foto {name}",
+    "fallbackName": "Lembaga amal",
+    "empty": "Belum ada foto.",
+    "alt": "Foto",
+    "viewFull": "Lihat gambar penuh",
+    "close": "Tutup",
+    "remove": "Hapus",
+    "removeConfirm": "Apakah Anda yakin ingin menghapus foto ini?",
+    "yes": "Ya",
+    "no": "Tidak",
+    "addOpen": "Tambah foto baru",
+    "addTitle": "Tambah foto",
+    "image": "Gambar",
+    "caption": "Keterangan (maks. 50 karakter)",
+    "saving": "Menyimpan…",
+    "save": "Simpan",
+    "deleteConfirm": "Apakah Anda yakin ingin menghapus foto ini? Tindakan ini tidak dapat dibatalkan.",
+    "delete": "Hapus"
+  },
+  "photoCapture": {
+    "takePhoto": "Ambil Foto",
+    "uploadPhoto": "Unggah Foto",
+    "selected": "Dipilih:",
+    "takeAPhoto": "Ambil foto",
+    "capture": "Tangkap",
+    "confirmPhoto": "Konfirmasi foto",
+    "takeAnother": "Ambil Lagi",
+    "useThisPhoto": "Gunakan Foto Ini",
+    "cameraUnavailable": "Kamera tidak tersedia di perangkat ini atau izin ditolak."
+  },
+  "thankYou": {
+    "back": "← Kembali ke profil",
+    "title": "Terima Kasih",
+    "subtitle": "Kontributor yang menyelesaikan donasi dengan organisasi Anda.",
+    "empty": "Belum ada daftar donasi yang selesai. Gunakan Ucapkan Terima Kasih pada daftar yang telah ditinjau untuk menambahkannya di sini.",
+    "noImage": "Tidak ada gambar",
+    "card": "Terima kasih {name} atas kedermawanan Anda."
+  },
+  "publicProfile": {
+    "contributorBack": "← Kembali ke daftar donasi utama",
+    "contributorTitle": "Profil kontributor",
+    "contributorSubtitle": "Tampilan hanya baca. Halaman ini hanya terlihat oleh lembaga amal.",
+    "name": "Nama",
+    "whatsapp": "Nomor WhatsApp",
+    "charityBack": "← Kembali",
+    "charityTitle": "Profil lembaga amal",
+    "charitySubtitle": "Tampilan hanya baca.",
+    "orgName": "Nama organisasi",
+    "address": "Alamat",
+    "location": "Lokasi",
+    "whatsappHint": "WhatsApp adalah cara yang disarankan untuk berkomunikasi dengan lembaga amal.",
+    "phone": "Nomor telepon",
+    "email": "Email",
+    "charityFallback": "Lembaga amal",
+    "contributorFallback": "Kontributor",
+    "thankYous": "Ucapan terima kasih",
+    "photos": "Foto"
+  },
+  "publicThankYous": {
+    "back": "← Kembali ke profil lembaga amal",
+    "title": "Ucapan terima kasih {name}",
+    "fallbackName": "Lembaga amal",
+    "subtitle": "Kontributor yang menyelesaikan donasi dengan organisasi ini.",
+    "empty": "Belum ada daftar donasi yang selesai.",
+    "noImage": "Tidak ada gambar",
+    "card": "Terima kasih {name} atas kedermawanan Anda."
+  },
+  "contributorThankYou": {
+    "title": "Terima kasih",
+    "message": "Terima kasih {name} atas kedermawanan Anda.",
+    "shareLink": "Bagikan kebaikan ini",
+    "shareBack": "← Kembali",
+    "shareTitle": "Bagikan kebaikan",
+    "shareSubtitle": "Bagikan pesan ini kepada teman dan komunitas Anda.",
+    "shareText": "Anda dapat melanjutkan kebaikan {name} dan membantu mereka yang membutuhkan. Bergabunglah di TheCharityLink.org"
+  },
+  "share": {
+    "defaultTitle": "Charity Link",
+    "defaultText": "Saya menemukan Charity Link - cara sederhana untuk menyumbangkan barang bekas yang masih layak pakai ke lembaga amal lokal yang membantu anak-anak yang membutuhkan. Lihat di sini:",
+    "title": "Bagikan Charity Link",
+    "subtitle": "Undang teman dan keluarga untuk berdonasi bersama Anda.",
+    "hintWhatsapp": "Pesan disalin. Jika WhatsApp hanya menampilkan tautan, tempel pesan ke dalam obrolan.",
+    "hintInstagram": "Pesan disalin. Instagram tidak mengizinkan postingan yang sudah diisi sebelumnya — tempel ke cerita atau pesan Anda.",
+    "hintInstagramFail": "Tidak dapat menyalin pesan. Silakan salin secara manual.",
+    "whatsapp": "WhatsApp",
+    "instagram": "Instagram",
+    "facebook": "Facebook",
+    "x": "X",
+    "email": "Email",
+    "copy": "Salin pesan",
+    "copied": "Disalin!"
+  }
+}

@@ -1,0 +1,325 @@
+{
+  "brand": {
+    "name": "TheCharityLink.org",
+    "alt": "Charity Link"
+  },
+  "nav": {
+    "home": "Accueil",
+    "signIn": "Connexion",
+    "faq": "FAQ",
+    "donationLists": "Listes de dons",
+    "masterDonationLists": "Listes de dons principales",
+    "profile": "Profil",
+    "language": "Langue"
+  },
+  "common": {
+    "cancel": "Annuler",
+    "back": "← Retour",
+    "emDash": "—",
+    "loading": "Chargement…",
+    "errorTitle": "Une erreur s’est produite",
+    "errorCode": "Code d’erreur : {code}"
+  },
+  "status": {
+    "NOT_SUBMITTED": "Non soumis",
+    "SUBMITTED": "Soumis",
+    "REVIEWED": "Examiné",
+    "COMPLETED": "Terminé"
+  },
+  "decision": {
+    "accept": "Accepter",
+    "notAccept": "Ne pas accepter"
+  },
+  "login": {
+    "intro": "Charity Link est une application qui vous aide à entrer en contact avec une association caritative locale pour donner vos objets d’occasion en bon état et aider les personnes dans le besoin. De nombreux orphelinats locaux ont besoin de votre générosité et de votre soutien pour aider tous les enfants dans le besoin. Rejoignez-nous et donnez ce que vous pouvez : chaque petit geste compte. Merci.",
+    "google": "Se connecter avec Google",
+    "microsoft": "Continuer avec Microsoft",
+    "error": {
+      "staleSession": "Votre compte n’a pas été trouvé dans la base de données (ou la session est obsolète). Connectez-vous à nouveau.",
+      "database": "Impossible d’atteindre la base de données. Vérifiez DATABASE_URL, assurez-vous que Postgres est en cours d’exécution, puis redémarrez le serveur de développement.",
+      "migration": "Les tables de la base de données sont manquantes. Depuis le dossier du projet, exécutez : npx prisma migrate dev (ou npx prisma db push).",
+      "noProviders": "Aucun fournisseur OAuth n’est configuré. Copiez .env.example vers .env et définissez au moins l’ID client et le secret d’un fournisseur."
+    }
+  },
+  "faq": {
+    "title": "FAQ",
+    "subtitle": "Questions fréquentes sur le fonctionnement de Charity Link.",
+    "footer": "Vous avez encore des questions ?",
+    "footerSignIn": "Connectez-vous",
+    "footerTail": "pour mettre à jour les coordonnées de votre profil.",
+    "items": [
+      {
+        "q": "Qu’est-ce que Charity Link ?",
+        "a": "Charity Link met en relation les contributeurs qui souhaitent donner des objets d’occasion en bon état avec des associations caritatives locales qui aident les personnes dans le besoin, y compris les enfants en orphelinat."
+      },
+      {
+        "q": "Comment donner des objets ?",
+        "a": "Créez une liste de dons, ajoutez des objets avec des photos et des descriptions, puis soumettez la liste. Charity Link envoie votre liste à une association locale en fonction de votre localisation."
+      },
+      {
+        "q": "Comment ma liste de dons est-elle associée à une association ?",
+        "a": "Lorsque vous soumettez une liste, l’application sélectionne une association à l’aide de la localisation du contributeur et des règles d’acheminement de l’application, afin que les associations proches reçoivent des dons pertinents."
+      },
+      {
+        "q": "Que se passe-t-il après avoir soumis une liste de dons ?",
+        "a": "L’association examine chaque objet, puis peut vous envoyer une réponse. Vous recevrez une notification (y compris WhatsApp lorsque c’est disponible) et pourrez consulter leur message et leurs coordonnées."
+      },
+      {
+        "q": "Comment contacter l’association après sa réponse ?",
+        "a": "Sur votre page de listes de dons, ouvrez une liste examinée et utilisez Contacter l’association pour voir son profil, y compris WhatsApp, téléphone, e-mail et adresse."
+      },
+      {
+        "q": "Je suis une association caritative. Comment commencer ?",
+        "a": "Veuillez contacter l’administrateur du site +62 8170778474",
+        "whatsappE164": "628170778474"
+      },
+      {
+        "q": "Puis-je partager Charity Link avec d’autres personnes ?",
+        "a": "Oui. Sur la page d’accueil du contributeur, vous pouvez partager Charity Link avec vos amis, votre famille et votre communauté via WhatsApp, Instagram, e-mail et d’autres canaux."
+      }
+    ]
+  },
+  "dashboard": {
+    "welcome": "Bienvenue",
+    "signedInAs": "Vous êtes connecté en tant que",
+    "charityRole": "Association caritative",
+    "profileHint": "Utilisez la page",
+    "profileLink": "profil",
+    "profileHintTail": "pour consulter ou modifier vos informations.",
+    "startDonating": "Commencer à donner",
+    "contributorFallback": "Contributeur",
+    "greeting": "Bonjour {name}, merci d’utiliser l’application Charity Link. Charity Link vous aide à entrer en contact avec une association caritative locale pour donner vos objets d’occasion en bon état et aider les personnes dans le besoin. De nombreux orphelinats locaux ont besoin de votre générosité et de votre soutien pour aider tous les enfants dans le besoin. Donnez ce que vous pouvez : chaque petit geste compte.",
+    "sharePrompt": "Merci encore, et n’hésitez pas à en parler et à le partager avec vos amis, votre famille et votre communauté !"
+  },
+  "howItWorks": {
+    "aria": "Comment fonctionne Charity Link",
+    "title": "Comment ça marche",
+    "stepOf": "Étape {n} sur {total}",
+    "next": "Suivant",
+    "steps": [
+      {
+        "title": "Créer un compte",
+        "description": "Le contributeur crée un compte pour commencer avec Charity Link.",
+        "alt": "Contributeur créant un compte"
+      },
+      {
+        "title": "Créer votre liste de dons",
+        "description": "Le contributeur crée une liste de dons et y ajoute des objets.",
+        "alt": "Contributeur ajoutant des objets à une liste de dons"
+      },
+      {
+        "title": "Soumettre votre liste",
+        "description": "Le contributeur soumet la liste de dons.",
+        "alt": "Contributeur soumettant une liste de dons"
+      },
+      {
+        "title": "Envoyée à une association proche",
+        "description": "La liste de dons est envoyée à un orphelinat / une association proche.",
+        "alt": "Liste de dons envoyée à une association proche"
+      },
+      {
+        "title": "L’association examine et répond",
+        "description": "L’association examine les objets, confirme ses besoins et répond au contributeur.",
+        "alt": "Association examinant les objets de don"
+      },
+      {
+        "title": "Coordonner la livraison",
+        "description": "Le contributeur contacte ensuite l’association et convient d’un horaire de livraison.",
+        "alt": "Contributeur coordonnant la livraison avec l’association"
+      },
+      {
+        "title": "Envoyer votre don",
+        "description": "Le contributeur envoie le don à l’association.",
+        "alt": "Contributeur livrant les dons à l’association"
+      }
+    ]
+  },
+  "onboarding": {
+    "roleIntro": "Créez un compte Contributeur pour vous connecter à une association locale et donner facilement vos objets d’occasion en bon état. Merci pour votre générosité et votre soutien.",
+    "begin": "Commencer",
+    "profileTitle": "Votre profil",
+    "profileSubtitleCharity": "Saisissez les informations de votre organisation.",
+    "profileSubtitleContributor": "Saisissez votre nom, votre localisation et votre numéro WhatsApp.",
+    "saveContinue": "Enregistrer et continuer"
+  },
+  "profile": {
+    "title": "Votre profil",
+    "subtitle": "Consultez et mettez à jour les informations fournies lors de l’inscription.",
+    "thankYou": "Merci",
+    "gotoPhotos": "Aller aux photos",
+    "signOut": "Se déconnecter",
+    "photosTitle": "Photos",
+    "saved": "Profil enregistré.",
+    "saveChanges": "Enregistrer les modifications",
+    "orgName": "Nom de l’organisation",
+    "address": "Adresse",
+    "whatsapp": "Numéro WhatsApp",
+    "phone": "Numéro de téléphone",
+    "email": "E-mail",
+    "name": "Nom",
+    "location": "Localisation",
+    "locationPlaceholder": "Sélectionnez une localisation",
+    "digitsPlaceholder": "Chiffres uniquement"
+  },
+  "donationLists": {
+    "title": "Listes de dons",
+    "subtitle": "Créez et gérez vos listes de dons.",
+    "new": "Nouvelle liste de dons",
+    "empty": "Vous n’avez encore aucune liste de dons.",
+    "createOne": "En créer une",
+    "created": "Créée le {date}",
+    "charityLabel": "Association :",
+    "charityFallback": "Association caritative",
+    "messageFromCharity": "Message de l’association",
+    "contactCharity": "Contacter l’association",
+    "submit": "Soumettre la liste",
+    "remove": "Supprimer",
+    "back": "← Retour aux listes de dons",
+    "newTitle": "Nouvelle liste de dons",
+    "newHelp": "Saisissez un nom. Le statut commence par « Non soumis ». Ajoutez ensuite des objets.",
+    "fieldName": "Nom",
+    "namePlaceholder": "ex. Collecte alimentaire d’hiver",
+    "create": "Créer la liste",
+    "addItem": "Ajouter un objet à la liste de dons",
+    "fieldStatus": "Statut",
+    "fieldCreated": "Créée",
+    "itemsTitle": "Objets",
+    "itemsEmpty": "Aucun objet pour le moment. Utilisez « Ajouter un objet à la liste de dons » pour en ajouter un.",
+    "itemAdded": "Ajouté le {date}",
+    "charityResponse": "Réponse de l’association :",
+    "removeItem": "Supprimer l’objet",
+    "itemBack": "← Retour à la liste",
+    "addItemTitle": "Ajouter un objet à la liste de dons",
+    "addItemHelp": "Saisissez une description et au moins une image (jusqu’à deux).",
+    "description": "Description",
+    "descriptionPlaceholder": "Décrivez cet objet de don…",
+    "imagesLabel": "Images (1 requise, jusqu’à 2)",
+    "imagesHelp": "JPEG, PNG, WebP ou GIF. Jusqu’à 2,5 Mo chacune après compression.",
+    "image1": "Image 1",
+    "image2": "Image 2 (facultative)",
+    "processing": "Traitement…",
+    "saveItem": "Enregistrer l’objet"
+  },
+  "masterLists": {
+    "title": "Listes de dons principales",
+    "subtitle": "Listes de dons soumises par les contributeurs.",
+    "empty": "Aucune liste de dons soumise pour le moment.",
+    "created": "Créée le {date}",
+    "completed": "Terminée le {date}",
+    "contributorLabel": "Contributeur :",
+    "respond": "Répondre au contributeur",
+    "giveThanks": "Remercier",
+    "back": "← Retour aux listes de dons principales",
+    "fieldStatus": "Statut",
+    "fieldCreated": "Créée",
+    "fieldContributor": "Contributeur",
+    "contributorFallback": "Contributeur",
+    "itemsTitle": "Objets",
+    "itemsEmpty": "Cette liste ne contient aucun objet.",
+    "itemAdded": "Ajouté le {date}",
+    "yourReview": "Votre examen :",
+    "reviewLabel": "Examen de l’association",
+    "reviewLegend": "Accepter ou ne pas accepter cet objet",
+    "saving": "Enregistrement…",
+    "viewList": "Voir la liste",
+    "respondTitle": "Répondre au contributeur",
+    "listLabel": "Liste :",
+    "lastUpdated": "Dernière mise à jour le {date}",
+    "messageLabel": "Message au contributeur",
+    "sendResponse": "Envoyer la réponse"
+  },
+  "photos": {
+    "back": "← Retour",
+    "title": "Photos de {name}",
+    "fallbackName": "Association",
+    "empty": "Aucune photo pour le moment.",
+    "alt": "Photo",
+    "viewFull": "Voir l’image en entier",
+    "close": "Fermer",
+    "remove": "Supprimer",
+    "removeConfirm": "Voulez-vous vraiment supprimer cette photo ?",
+    "yes": "Oui",
+    "no": "Non",
+    "addOpen": "Ajouter une nouvelle photo",
+    "addTitle": "Ajouter une photo",
+    "image": "Image",
+    "caption": "Légende (50 caractères max.)",
+    "saving": "Enregistrement…",
+    "save": "Enregistrer",
+    "deleteConfirm": "Voulez-vous vraiment supprimer cette photo ? Cette action est irréversible.",
+    "delete": "Supprimer"
+  },
+  "photoCapture": {
+    "takePhoto": "Prendre une photo",
+    "uploadPhoto": "Téléverser une photo",
+    "selected": "Sélectionnée :",
+    "takeAPhoto": "Prendre une photo",
+    "capture": "Capturer",
+    "confirmPhoto": "Confirmer la photo",
+    "takeAnother": "En prendre une autre",
+    "useThisPhoto": "Utiliser cette photo",
+    "cameraUnavailable": "La caméra n’est pas disponible sur cet appareil ou l’autorisation a été refusée."
+  },
+  "thankYou": {
+    "back": "← Retour au profil",
+    "title": "Merci",
+    "subtitle": "Contributeurs qui ont terminé des dons avec votre organisation.",
+    "empty": "Aucune liste de dons terminée pour le moment. Utilisez Remercier sur une liste examinée pour l’ajouter ici.",
+    "noImage": "Aucune image",
+    "card": "Merci {name} pour votre générosité."
+  },
+  "publicProfile": {
+    "contributorBack": "← Retour aux listes de dons principales",
+    "contributorTitle": "Profil du contributeur",
+    "contributorSubtitle": "Vue en lecture seule. Cette page n’est visible que par les associations caritatives.",
+    "name": "Nom",
+    "whatsapp": "Numéro WhatsApp",
+    "charityBack": "← Retour",
+    "charityTitle": "Profil de l’association caritative",
+    "charitySubtitle": "Vue en lecture seule.",
+    "orgName": "Nom de l’organisation",
+    "address": "Adresse",
+    "location": "Localisation",
+    "whatsappHint": "WhatsApp est le moyen privilégié pour communiquer avec l’association caritative.",
+    "phone": "Numéro de téléphone",
+    "email": "E-mail",
+    "charityFallback": "Association caritative",
+    "contributorFallback": "Contributeur",
+    "thankYous": "Remerciements",
+    "photos": "Photos"
+  },
+  "publicThankYous": {
+    "back": "← Retour au profil de l’association",
+    "title": "Remerciements de {name}",
+    "fallbackName": "Association",
+    "subtitle": "Contributeurs qui ont terminé des dons avec cette organisation.",
+    "empty": "Aucune liste de dons terminée pour le moment.",
+    "noImage": "Aucune image",
+    "card": "Merci {name} pour votre générosité."
+  },
+  "contributorThankYou": {
+    "title": "Merci",
+    "message": "Merci {name} pour votre générosité.",
+    "shareLink": "Partager cette générosité",
+    "shareBack": "← Retour",
+    "shareTitle": "Partager la générosité",
+    "shareSubtitle": "Partagez ce message avec vos amis et votre communauté.",
+    "shareText": "Vous pouvez prolonger la générosité de {name} et aider les personnes dans le besoin. Rejoignez TheCharityLink.org"
+  },
+  "share": {
+    "defaultTitle": "Charity Link",
+    "defaultText": "J’ai découvert Charity Link — un moyen simple de donner des objets d’occasion en bon état à des associations locales qui aident les enfants dans le besoin. Découvrez-le :",
+    "title": "Partager Charity Link",
+    "subtitle": "Invitez vos amis et votre famille à donner avec vous.",
+    "hintWhatsapp": "Message copié. Si WhatsApp n’affiche que le lien, collez le message dans la discussion.",
+    "hintInstagram": "Message copié. Instagram n’autorise pas les publications préremplies — collez-le dans votre story ou votre message.",
+    "hintInstagramFail": "Impossible de copier le message. Veuillez le copier manuellement.",
+    "whatsapp": "WhatsApp",
+    "instagram": "Instagram",
+    "facebook": "Facebook",
+    "x": "X",
+    "email": "E-mail",
+    "copy": "Copier le message",
+    "copied": "Copié !"
+  }
+}

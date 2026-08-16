@@ -5,18 +5,17 @@ import {
   deleteDonationList,
   submitDonationList,
 } from "@/app/actions/donation-lists";
+import { PendingActionForm } from "@/components/pending-action-form";
+import { getDictionary } from "@/i18n/get-dictionary";
+import { getLocale } from "@/i18n/get-locale";
+import { t } from "@/i18n/t";
 import { requireContributor } from "@/lib/auth-server";
 import { prisma } from "@/lib/prisma";
 
-function formatStatus(status: string) {
-  return status
-    .replace(/_/g, " ")
-    .toLowerCase()
-    .replace(/^\w/, (c) => c.toUpperCase());
-}
-
 export default async function DonationListsPage() {
   const { userId } = await requireContributor();
+  const locale = await getLocale();
+  const dict = await getDictionary(locale);
 
   const lists = await prisma.donationList.findMany({
     where: { contributorId: userId },
@@ -35,24 +34,26 @@ export default async function DonationListsPage() {
     <main>
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Donation lists</h1>
+          <h1 className="text-2xl font-bold text-slate-900">
+            {t(dict, "donationLists.title")}
+          </h1>
           <p className="mt-1 text-sm text-slate-600">
-            Create and manage your donation lists.
+            {t(dict, "donationLists.subtitle")}
           </p>
         </div>
         <Link
           href="/donation-lists/new"
           className="rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800"
         >
-          New donation list
+          {t(dict, "donationLists.new")}
         </Link>
       </div>
 
       {lists.length === 0 ? (
         <p className="mt-10 text-sm text-slate-600">
-          You have no donation lists yet.{" "}
+          {t(dict, "donationLists.empty")}{" "}
           <Link className="font-medium underline" href="/donation-lists/new">
-            Create one
+            {t(dict, "donationLists.createOne")}
           </Link>
           .
         </p>
@@ -81,24 +82,26 @@ export default async function DonationListsPage() {
                             ? "rounded-full bg-emerald-100 px-2 py-0.5 text-xs font-medium text-emerald-800"
                             : "rounded-full bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-900"
                     }
-                    title="Status"
+                    title={t(dict, "donationLists.fieldStatus")}
                   >
-                    {formatStatus(list.status)}
+                    {t(dict, `status.${list.status}`)}
                   </span>
                 </div>
                 <p className="mt-1 text-xs text-slate-500">
-                  Created {list.createdAt.toLocaleString()}
+                  {t(dict, "donationLists.created", {
+                    date: list.createdAt.toLocaleString(),
+                  })}
                 </p>
                 {list.charityId && list.charity ? (
                   <p className="mt-1 text-xs text-slate-600">
-                    Charity:{" "}
+                    {t(dict, "donationLists.charityLabel")}{" "}
                     <Link
                       href={`/profile/${list.charityId}`}
                       className="font-medium text-slate-900 underline hover:text-slate-700"
                     >
                       {list.charity.profile?.organizationName?.trim() ||
                         list.charity.name?.trim() ||
-                        "Charity organization"}
+                        t(dict, "donationLists.charityFallback")}
                     </Link>
                   </p>
                 ) : null}
@@ -107,7 +110,7 @@ export default async function DonationListsPage() {
                 list.charityResponseMessage ? (
                   <div className="mt-2 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-xs text-slate-800">
                     <p className="font-medium text-slate-600">
-                      Message from charity
+                      {t(dict, "donationLists.messageFromCharity")}
                     </p>
                     <p className="mt-1 whitespace-pre-wrap">
                       {list.charityResponseMessage}
@@ -128,31 +131,27 @@ export default async function DonationListsPage() {
                     href={`/profile/${list.charityId}`}
                     className="rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-sm font-medium text-slate-800 hover:bg-slate-50"
                   >
-                    Contact Charity
+                    {t(dict, "donationLists.contactCharity")}
                   </Link>
                 ) : null}
                 {list.status === DonationListStatus.NOT_SUBMITTED &&
                 list._count.items > 0 ? (
-                  <form action={submitDonationList}>
-                    <input type="hidden" name="id" value={list.id} />
-                    <button
-                      type="submit"
-                      className="rounded-lg bg-slate-900 px-3 py-1.5 text-sm font-medium text-white hover:bg-slate-800"
-                    >
-                      Submit list
-                    </button>
-                  </form>
+                  <PendingActionForm
+                    action={submitDonationList}
+                    hiddenFields={{ id: list.id }}
+                    buttonClassName="rounded-lg bg-slate-900 px-3 py-1.5 text-sm font-medium text-white hover:bg-slate-800 disabled:opacity-60"
+                  >
+                    {t(dict, "donationLists.submit")}
+                  </PendingActionForm>
                 ) : null}
                 {list.status === DonationListStatus.NOT_SUBMITTED ? (
-                  <form action={deleteDonationList}>
-                    <input type="hidden" name="id" value={list.id} />
-                    <button
-                      type="submit"
-                      className="rounded border border-red-200 bg-white px-3 py-1.5 text-sm text-red-700 hover:bg-red-50"
-                    >
-                      Remove
-                    </button>
-                  </form>
+                  <PendingActionForm
+                    action={deleteDonationList}
+                    hiddenFields={{ id: list.id }}
+                    buttonClassName="rounded border border-red-200 bg-white px-3 py-1.5 text-sm text-red-700 hover:bg-red-50 disabled:opacity-60"
+                  >
+                    {t(dict, "donationLists.remove")}
+                  </PendingActionForm>
                 ) : null}
               </div>
             </li>

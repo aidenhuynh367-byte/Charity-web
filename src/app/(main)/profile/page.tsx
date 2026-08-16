@@ -3,6 +3,9 @@ import { Role } from "@prisma/client";
 
 import { logoutAction } from "@/app/actions/auth";
 import { CharityPhotoGrid } from "@/components/charity-photo-grid";
+import { getDictionary } from "@/i18n/get-dictionary";
+import { getLocale } from "@/i18n/get-locale";
+import { t } from "@/i18n/t";
 import { requireUserId, getOrCreateProfile } from "@/lib/auth-server";
 import { prisma } from "@/lib/prisma";
 
@@ -11,6 +14,8 @@ import { ProfileEditForm } from "./profile-edit-form";
 export default async function ProfilePage() {
   const userId = await requireUserId();
   const profile = await getOrCreateProfile(userId);
+  const locale = await getLocale();
+  const dict = await getDictionary(locale);
 
   const charityImages =
     profile.role === Role.CHARITY_ORGANIZATION
@@ -25,9 +30,11 @@ export default async function ProfilePage() {
     <main>
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Your profile</h1>
+          <h1 className="text-2xl font-bold text-slate-900">
+            {t(dict, "profile.title")}
+          </h1>
           <p className="mt-1 text-sm text-slate-600">
-            View and update the information you provided at signup.
+            {t(dict, "profile.subtitle")}
           </p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
@@ -37,13 +44,13 @@ export default async function ProfilePage() {
                 href="/thank-you"
                 className="rounded-lg border border-slate-300 px-3 py-2 text-sm font-medium text-slate-800 hover:bg-slate-50"
               >
-                Thank You
+                {t(dict, "profile.thankYou")}
               </Link>
               <Link
                 href={`/profile/${userId}/photos`}
                 className="rounded-lg border border-slate-300 px-3 py-2 text-sm font-medium text-slate-800 hover:bg-slate-50"
               >
-                Goto photos
+                {t(dict, "profile.gotoPhotos")}
               </Link>
             </>
           ) : null}
@@ -52,7 +59,7 @@ export default async function ProfilePage() {
               type="submit"
               className="rounded-lg border border-slate-300 px-3 py-2 text-sm font-medium text-slate-800 hover:bg-slate-50"
             >
-              Sign out
+              {t(dict, "profile.signOut")}
             </button>
           </form>
         </div>
@@ -60,7 +67,9 @@ export default async function ProfilePage() {
       <ProfileEditForm role={profile.role!} initial={profile} />
       {profile.role === Role.CHARITY_ORGANIZATION ? (
         <section className="mt-10 border-t border-slate-200 pt-8">
-          <h2 className="text-lg font-semibold text-slate-900">Photos</h2>
+          <h2 className="text-lg font-semibold text-slate-900">
+            {t(dict, "profile.photosTitle")}
+          </h2>
           <CharityPhotoGrid images={charityImages} />
         </section>
       ) : null}

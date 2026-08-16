@@ -5,32 +5,37 @@ import {
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import { getDictionary } from "@/i18n/get-dictionary";
+import { getLocale } from "@/i18n/get-locale";
+import { t, type Dictionary } from "@/i18n/t";
 import { requireCharityOrganization } from "@/lib/auth-server";
 import { prisma } from "@/lib/prisma";
 
 import { CharityItemReviewForm } from "../charity-item-review-form";
 
-function formatStatus(status: string) {
-  return status.replace(/_/g, " ").toLowerCase().replace(/^\w/, (c) => c.toUpperCase());
-}
-
-function charityDecisionLabel(decision: DonationListItemCharityDecision) {
+function charityDecisionLabel(
+  dict: Dictionary,
+  decision: DonationListItemCharityDecision,
+) {
   return decision === DonationListItemCharityDecision.ACCEPT
-    ? "Accept"
-    : "Not Accept";
+    ? t(dict, "decision.accept")
+    : t(dict, "decision.notAccept");
 }
 
-function contributorLabel(user: {
-  name: string | null;
-  email: string | null;
-  profile: { displayName: string | null } | null;
-}) {
+function contributorLabel(
+  dict: Dictionary,
+  user: {
+    name: string | null;
+    email: string | null;
+    profile: { displayName: string | null } | null;
+  },
+) {
   const fromProfile = user.profile?.displayName?.trim();
   if (fromProfile) return fromProfile;
   const fromName = user.name?.trim();
   if (fromName) return fromName;
   if (user.email) return user.email;
-  return "Contributor";
+  return t(dict, "masterLists.contributorFallback");
 }
 
 type Props = { params: Promise<{ id: string }> };
@@ -38,6 +43,8 @@ type Props = { params: Promise<{ id: string }> };
 export default async function MasterDonationListDetailPage({ params }: Props) {
   const { id } = await params;
   const { userId } = await requireCharityOrganization();
+  const locale = await getLocale();
+  const dict = await getDictionary(locale);
 
   const list = await prisma.donationList.findFirst({
     where: {
@@ -64,37 +71,47 @@ export default async function MasterDonationListDetailPage({ params }: Props) {
         href="/master-donation-lists"
         className="text-sm font-medium text-slate-600 hover:text-slate-900"
       >
-        ← Back to master donation lists
+        {t(dict, "masterLists.back")}
       </Link>
       <div className="mt-4 flex flex-wrap items-start justify-between gap-4">
         <h1 className="text-2xl font-bold text-slate-900">{list.name}</h1>
       </div>
       <dl className="mt-6 space-y-3 text-sm">
         <div>
-          <dt className="font-medium text-slate-500">Status</dt>
-          <dd className="text-slate-900">{formatStatus(list.status)}</dd>
+          <dt className="font-medium text-slate-500">
+            {t(dict, "masterLists.fieldStatus")}
+          </dt>
+          <dd className="text-slate-900">{t(dict, `status.${list.status}`)}</dd>
         </div>
         <div>
-          <dt className="font-medium text-slate-500">Created</dt>
+          <dt className="font-medium text-slate-500">
+            {t(dict, "masterLists.fieldCreated")}
+          </dt>
           <dd className="text-slate-900">{list.createdAt.toLocaleString()}</dd>
         </div>
         <div>
-          <dt className="font-medium text-slate-500">Contributor</dt>
+          <dt className="font-medium text-slate-500">
+            {t(dict, "masterLists.fieldContributor")}
+          </dt>
           <dd className="text-slate-900">
             <Link
               href={`/profile/${list.contributorId}`}
               className="font-medium underline hover:text-slate-700"
             >
-              {contributorLabel(list.contributor)}
+              {contributorLabel(dict, list.contributor)}
             </Link>
           </dd>
         </div>
       </dl>
 
       <section className="mt-10">
-        <h2 className="text-lg font-semibold text-slate-900">Items</h2>
+        <h2 className="text-lg font-semibold text-slate-900">
+          {t(dict, "masterLists.itemsTitle")}
+        </h2>
         {list.items.length === 0 ? (
-          <p className="mt-3 text-sm text-slate-600">This list has no items.</p>
+          <p className="mt-3 text-sm text-slate-600">
+            {t(dict, "masterLists.itemsEmpty")}
+          </p>
         ) : (
           <ul className="mt-4 space-y-6">
             {list.items.map((item) => (
@@ -126,7 +143,9 @@ export default async function MasterDonationListDetailPage({ params }: Props) {
                       {item.description}
                     </p>
                     <p className="mt-2 text-xs text-slate-500">
-                      Added {item.createdAt.toLocaleString()}
+                      {t(dict, "masterLists.itemAdded", {
+                        date: item.createdAt.toLocaleString(),
+                      })}
                     </p>
                     {list.status === DonationListStatus.SUBMITTED ? (
                       <CharityItemReviewForm
@@ -135,9 +154,9 @@ export default async function MasterDonationListDetailPage({ params }: Props) {
                       />
                     ) : item.charityDecision ? (
                       <p className="mt-3 border-t border-slate-100 pt-3 text-xs font-medium text-slate-600">
-                        Your review:{" "}
+                        {t(dict, "masterLists.yourReview")}{" "}
                         <span className="text-slate-900">
-                          {charityDecisionLabel(item.charityDecision)}
+                          {charityDecisionLabel(dict, item.charityDecision)}
                         </span>
                       </p>
                     ) : null}

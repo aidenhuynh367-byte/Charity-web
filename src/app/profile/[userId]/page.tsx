@@ -4,18 +4,22 @@ import { Role, type Profile } from "@prisma/client";
 import { getCountryCallingCode, type CountryCode } from "libphonenumber-js";
 
 import { auth } from "@/auth";
-import { getOrCreateProfile } from "@/lib/auth-server";
 import { CharityPhotoGrid } from "@/components/charity-photo-grid";
+import { getDictionary } from "@/i18n/get-dictionary";
+import { getLocale } from "@/i18n/get-locale";
+import { t, type Dictionary } from "@/i18n/t";
+import { getOrCreateProfile } from "@/lib/auth-server";
 import { prisma } from "@/lib/prisma";
 import { profileWhatsappToE164 } from "@/lib/profile-whatsapp-e164";
 
 function formatPhoneLine(
+  dict: Dictionary,
   country: string | null | undefined,
   national: string | null | undefined,
 ): string {
   const c = country?.trim();
   const n = national?.trim();
-  if (!c || !n) return "—";
+  if (!c || !n) return t(dict, "common.emDash");
   const cc = c.toUpperCase() as CountryCode;
   try {
     const dial = getCountryCallingCode(cc);
@@ -39,6 +43,8 @@ export default async function ProfileReadOnlyPage({ params }: Props) {
   const { userId: targetUserId } = await params;
   const session = await auth();
   const viewerId = session?.user?.id ?? null;
+  const locale = await getLocale();
+  const dict = await getDictionary(locale);
 
   const target = await prisma.user.findUnique({
     where: { id: targetUserId },
@@ -66,6 +72,7 @@ export default async function ProfileReadOnlyPage({ params }: Props) {
       : null;
     return (
       <CharityProfileReadOnly
+        dict={dict}
         charityId={targetUserId}
         backHref={
           viewerProfile?.role === Role.CONTRIBUTOR ? "/donation-lists" : "/"
@@ -73,7 +80,7 @@ export default async function ProfileReadOnlyPage({ params }: Props) {
         organizationName={
           target.profile.organizationName?.trim() ||
           target.name?.trim() ||
-          "Charity organization"
+          t(dict, "publicProfile.charityFallback")
         }
         profile={target.profile}
         images={images}
@@ -95,11 +102,12 @@ export default async function ProfileReadOnlyPage({ params }: Props) {
   ) {
     return (
       <ContributorProfileReadOnly
+        dict={dict}
         displayName={
           target.profile.displayName?.trim() ||
           target.name?.trim() ||
           target.email ||
-          "Contributor"
+          t(dict, "publicProfile.contributorFallback")
         }
         profile={target.profile}
       />
@@ -110,13 +118,16 @@ export default async function ProfileReadOnlyPage({ params }: Props) {
 }
 
 function ContributorProfileReadOnly({
+  dict,
   displayName,
   profile,
 }: {
+  dict: Dictionary;
   displayName: string;
   profile: Profile;
 }) {
   const whatsappLabel = formatPhoneLine(
+    dict,
     profile.contributorWhatsappCountry,
     profile.contributorWhatsappNationalNumber,
   );
@@ -131,26 +142,30 @@ function ContributorProfileReadOnly({
         href="/master-donation-lists"
         className="text-sm font-medium text-slate-600 hover:text-slate-900"
       >
-        ← Back to master donation lists
+        {t(dict, "publicProfile.contributorBack")}
       </Link>
       <div className="mt-4 flex flex-wrap items-start justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-slate-900">
-            Contributor profile
+            {t(dict, "publicProfile.contributorTitle")}
           </h1>
           <p className="mt-1 text-sm text-slate-600">
-            Read-only view. This page is visible to charity organizations only.
+            {t(dict, "publicProfile.contributorSubtitle")}
           </p>
         </div>
       </div>
 
       <dl className="mt-8 space-y-4 text-sm">
         <div>
-          <dt className="font-medium text-slate-500">Name</dt>
+          <dt className="font-medium text-slate-500">
+            {t(dict, "publicProfile.name")}
+          </dt>
           <dd className="text-slate-900">{displayName}</dd>
         </div>
         <div>
-          <dt className="font-medium text-slate-500">WhatsApp number</dt>
+          <dt className="font-medium text-slate-500">
+            {t(dict, "publicProfile.whatsapp")}
+          </dt>
           <dd className="text-slate-900">
             {whatsappE164 ? (
               <a
@@ -172,12 +187,14 @@ function ContributorProfileReadOnly({
 }
 
 function CharityProfileReadOnly({
+  dict,
   charityId,
   backHref,
   organizationName,
   profile,
   images,
 }: {
+  dict: Dictionary;
   charityId: string;
   backHref: string;
   organizationName: string;
@@ -187,6 +204,7 @@ function CharityProfileReadOnly({
   const address = profile.address?.trim() || "";
   const email = profile.charityEmail?.trim() || "";
   const phoneLabel = formatPhoneLine(
+    dict,
     profile.phoneCountry,
     profile.phoneNationalNumber,
   );
@@ -195,6 +213,7 @@ function CharityProfileReadOnly({
     profile.phoneNationalNumber,
   );
   const whatsappLabel = formatPhoneLine(
+    dict,
     profile.charityWhatsappCountry,
     profile.charityWhatsappNationalNumber,
   );
@@ -209,24 +228,30 @@ function CharityProfileReadOnly({
         href={backHref}
         className="text-sm font-medium text-slate-600 hover:text-slate-900"
       >
-        ← Back
+        {t(dict, "publicProfile.charityBack")}
       </Link>
       <div className="mt-4 flex flex-wrap items-start justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-slate-900">
-            Charity organization profile
+            {t(dict, "publicProfile.charityTitle")}
           </h1>
-          <p className="mt-1 text-sm text-slate-600">Read-only view.</p>
+          <p className="mt-1 text-sm text-slate-600">
+            {t(dict, "publicProfile.charitySubtitle")}
+          </p>
         </div>
       </div>
 
       <dl className="mt-8 space-y-4 text-sm">
         <div>
-          <dt className="font-medium text-slate-500">Organization name</dt>
+          <dt className="font-medium text-slate-500">
+            {t(dict, "publicProfile.orgName")}
+          </dt>
           <dd className="text-slate-900">{organizationName}</dd>
         </div>
         <div>
-          <dt className="font-medium text-slate-500">Address</dt>
+          <dt className="font-medium text-slate-500">
+            {t(dict, "publicProfile.address")}
+          </dt>
           <dd className="text-slate-900">
             {address ? (
               <a
@@ -238,22 +263,23 @@ function CharityProfileReadOnly({
                 {address}
               </a>
             ) : (
-              "—"
+              t(dict, "common.emDash")
             )}
           </dd>
         </div>
         <div>
-          <dt className="font-medium text-slate-500">Location</dt>
+          <dt className="font-medium text-slate-500">
+            {t(dict, "publicProfile.location")}
+          </dt>
           <dd className="text-slate-900">
-            {profile.charityLocation?.trim() || "—"}
+            {profile.charityLocation?.trim() || t(dict, "common.emDash")}
           </dd>
         </div>
         <div>
           <dt className="flex flex-wrap items-baseline gap-x-2 gap-y-1 text-base font-bold text-slate-900">
-            <span>WhatsApp number</span>
+            <span>{t(dict, "publicProfile.whatsapp")}</span>
             <span className="text-base font-bold text-red-600">
-              Whatsapp is the preferred way to communicate with the charity
-              organization.
+              {t(dict, "publicProfile.whatsappHint")}
             </span>
           </dt>
           <dd className="mt-1 text-base font-bold text-slate-900">
@@ -272,7 +298,9 @@ function CharityProfileReadOnly({
           </dd>
         </div>
         <div>
-          <dt className="font-medium text-slate-500">Phone number</dt>
+          <dt className="font-medium text-slate-500">
+            {t(dict, "publicProfile.phone")}
+          </dt>
           <dd className="text-slate-900">
             {phoneE164 ? (
               <a
@@ -287,7 +315,9 @@ function CharityProfileReadOnly({
           </dd>
         </div>
         <div>
-          <dt className="font-medium text-slate-500">Email</dt>
+          <dt className="font-medium text-slate-500">
+            {t(dict, "publicProfile.email")}
+          </dt>
           <dd className="text-slate-900">
             {email ? (
               <a
@@ -297,7 +327,7 @@ function CharityProfileReadOnly({
                 {email}
               </a>
             ) : (
-              "—"
+              t(dict, "common.emDash")
             )}
           </dd>
         </div>
@@ -308,9 +338,11 @@ function CharityProfileReadOnly({
           href={`/profile/${charityId}/thank-yous`}
           className="inline-flex rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-800 hover:bg-slate-50"
         >
-          Thank-yous
+          {t(dict, "publicProfile.thankYous")}
         </Link>
-        <h2 className="mt-4 text-lg font-semibold text-slate-900">Photos</h2>
+        <h2 className="mt-4 text-lg font-semibold text-slate-900">
+          {t(dict, "publicProfile.photos")}
+        </h2>
         <CharityPhotoGrid images={images} />
       </section>
     </main>

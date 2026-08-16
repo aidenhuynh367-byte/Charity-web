@@ -3,8 +3,10 @@
 import { useActionState } from "react";
 
 import { setRoleAction, type FormState } from "@/app/actions/profile";
+import { useI18n } from "@/components/i18n-provider";
 
 export function BeginContributorForm() {
+  const { t } = useI18n();
   const [state, formAction] = useActionState<FormState, FormData>(
     setRoleAction,
     null,
@@ -22,7 +24,7 @@ export function BeginContributorForm() {
         type="submit"
         className="w-full rounded-lg bg-slate-900 px-4 py-4 text-xl font-semibold text-white hover:bg-slate-800"
       >
-        Begin
+        {t("onboarding.begin")}
       </button>
     </form>
   );

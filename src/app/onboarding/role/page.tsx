@@ -2,6 +2,9 @@ import { Role } from "@prisma/client";
 import { redirect } from "next/navigation";
 
 import { requireUserId, getOrCreateProfile } from "@/lib/auth-server";
+import { getDictionary } from "@/i18n/get-dictionary";
+import { getLocale } from "@/i18n/get-locale";
+import { t } from "@/i18n/t";
 import { prisma } from "@/lib/prisma";
 
 import { BeginContributorForm } from "./begin-contributor-form";
@@ -36,13 +39,14 @@ export default async function OnboardingRolePage({
     redirect("/onboarding/profile");
   }
 
+  const locale = await getLocale();
+  const dict = await getDictionary(locale);
+
   return (
     <div className="mx-auto flex min-h-[70vh] max-w-lg flex-col px-4 pb-10 pt-1.5">
       <div>
         <p className="text-lg font-bold leading-relaxed text-slate-900 sm:text-xl">
-          Create a Contributor account to connect to a local charity to easily
-          donate your gently used items. Thank you for your generosity and
-          support.
+          {t(dict, "onboarding.roleIntro")}
         </p>
         <WelcomeSlideshow />
       </div>

@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 
+import { useI18n } from "@/components/i18n-provider";
+
 function setInputFile(input: HTMLInputElement | null, file: File | null) {
   if (!input) return;
   const dt = new DataTransfer();
@@ -25,6 +27,7 @@ export function PhotoCaptureSlot({
   onFileChange,
   overlayClassName = "z-50",
 }: PhotoCaptureSlotProps) {
+  const { t } = useI18n();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const cameraInputRef = useRef<HTMLInputElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -88,7 +91,7 @@ export function PhotoCaptureSlot({
   }, [mode]);
 
   function stopCamera() {
-    streamRef.current?.getTracks().forEach((t) => t.stop());
+    streamRef.current?.getTracks().forEach((track) => track.stop());
     streamRef.current = null;
     if (videoRef.current) videoRef.current.srcObject = null;
   }
@@ -120,7 +123,7 @@ export function PhotoCaptureSlot({
         return;
       }
       setCameraAvailable(false);
-      setCameraError("Camera is not available on this device.");
+      setCameraError(t("photoCapture.cameraUnavailable"));
     }
   }
 
@@ -203,7 +206,7 @@ export function PhotoCaptureSlot({
           disabled={!cameraAvailable}
           className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-800 hover:bg-slate-50 disabled:cursor-not-allowed disabled:bg-slate-100 disabled:text-slate-400"
         >
-          Take Photo
+          {t("photoCapture.takePhoto")}
         </button>
         <button
           type="button"
@@ -215,12 +218,14 @@ export function PhotoCaptureSlot({
           }}
           className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-800 hover:bg-slate-50"
         >
-          Upload Photo
+          {t("photoCapture.uploadPhoto")}
         </button>
       </div>
       {file ? (
         <div className="mt-1 space-y-1">
-          <p className="text-xs text-slate-500">Selected: {file.name}</p>
+          <p className="text-xs text-slate-500">
+            {t("photoCapture.selected")} {file.name}
+          </p>
           {selectedUrl ? (
             // eslint-disable-next-line @next/next/no-img-element -- local blob preview
             <img
@@ -260,7 +265,9 @@ export function PhotoCaptureSlot({
           className={`fixed inset-0 ${overlayClassName} flex items-center justify-center bg-black/50 p-4`}
         >
           <div className="mx-auto w-full max-w-lg rounded-lg bg-white p-4 shadow-lg">
-            <h3 className="text-lg font-medium text-slate-900">Take a photo</h3>
+            <h3 className="text-lg font-medium text-slate-900">
+              {t("photoCapture.takeAPhoto")}
+            </h3>
             <video
               ref={videoRef}
               playsInline
@@ -274,14 +281,14 @@ export function PhotoCaptureSlot({
                 onClick={cancelPending}
                 className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-800 hover:bg-slate-50"
               >
-                Cancel
+                {t("common.cancel")}
               </button>
               <button
                 type="button"
                 onClick={captureFromVideo}
                 className="rounded-lg bg-slate-900 px-3 py-2 text-sm font-medium text-white hover:bg-slate-800"
               >
-                Capture
+                {t("photoCapture.capture")}
               </button>
             </div>
           </div>
@@ -293,7 +300,9 @@ export function PhotoCaptureSlot({
           className={`fixed inset-0 ${overlayClassName} flex items-center justify-center bg-black/50 p-4`}
         >
           <div className="mx-auto w-full max-w-lg rounded-lg bg-white p-4 shadow-lg">
-            <h3 className="text-lg font-medium text-slate-900">Confirm photo</h3>
+            <h3 className="text-lg font-medium text-slate-900">
+              {t("photoCapture.confirmPhoto")}
+            </h3>
             {/* eslint-disable-next-line @next/next/no-img-element -- local blob preview */}
             <img
               src={previewUrl}
@@ -306,21 +315,21 @@ export function PhotoCaptureSlot({
                 onClick={cancelPending}
                 className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-800 hover:bg-slate-50"
               >
-                Cancel
+                {t("common.cancel")}
               </button>
               <button
                 type="button"
                 onClick={takeAnother}
                 className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-800 hover:bg-slate-50"
               >
-                Take Another
+                {t("photoCapture.takeAnother")}
               </button>
               <button
                 type="button"
                 onClick={confirmPending}
                 className="rounded-lg bg-slate-900 px-3 py-2 text-sm font-medium text-white hover:bg-slate-800"
               >
-                Use This Photo
+                {t("photoCapture.useThisPhoto")}
               </button>
             </div>
           </div>

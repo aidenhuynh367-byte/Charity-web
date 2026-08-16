@@ -14,6 +14,7 @@ import {
   type FormState,
 } from "@/app/actions/profile";
 import { ContributorLocationField } from "@/components/contributor-location-field";
+import { useI18n } from "@/components/i18n-provider";
 import { PhoneCountryFields } from "@/components/phone-country-fields";
 import { formText } from "@/lib/form-text";
 import {
@@ -44,6 +45,7 @@ type Props = {
 };
 
 export function ProfileOnboardingForm({ role, initial }: Props) {
+  const { t } = useI18n();
   const [state, formAction] = useActionState<FormState, FormData>(
     completeOnboardingProfileAction,
     null,
@@ -114,12 +116,12 @@ export function ProfileOnboardingForm({ role, initial }: Props) {
           </p>
         ) : null}
         <Field
-          label="Organization name"
+          label={t("profile.orgName")}
           name="organizationName"
           defaultValue={initial.organizationName ?? ""}
         />
         <Field
-          label="Address"
+          label={t("profile.address")}
           name="address"
           defaultValue={initial.address ?? ""}
         />
@@ -128,21 +130,21 @@ export function ProfileOnboardingForm({ role, initial }: Props) {
           defaultValue={initial.charityLocation}
         />
         <PhoneCountryFields
-          label="WhatsApp number"
+          label={t("profile.whatsapp")}
           countryFieldName="charityWhatsappCountry"
           nationalFieldName="charityWhatsappNationalNumber"
           defaultCountry={initial.charityWhatsappCountry}
           defaultNational={initial.charityWhatsappNationalNumber}
         />
         <PhoneCountryFields
-          label="Phone number"
+          label={t("profile.phone")}
           countryFieldName="phoneCountry"
           nationalFieldName="phoneNationalNumber"
           defaultCountry={initial.phoneCountry}
           defaultNational={initial.phoneNationalNumber}
         />
         <Field
-          label="Email"
+          label={t("profile.email")}
           name="charityEmail"
           type="text"
           autoComplete="email"
@@ -153,7 +155,7 @@ export function ProfileOnboardingForm({ role, initial }: Props) {
           disabled={isPending}
           className="mt-4 w-full rounded-lg bg-slate-900 px-4 py-3 text-sm font-medium text-white hover:bg-slate-800 disabled:opacity-60"
         >
-          Save and continue
+          {t("onboarding.saveContinue")}
         </button>
       </form>
     );
@@ -167,13 +169,13 @@ export function ProfileOnboardingForm({ role, initial }: Props) {
         </p>
       ) : null}
       <Field
-        label="Name"
+        label={t("profile.name")}
         name="displayName"
         defaultValue={initial.displayName ?? ""}
       />
       <ContributorLocationField defaultValue={initial.contributorLocation} />
       <PhoneCountryFields
-        label="WhatsApp number"
+        label={t("profile.whatsapp")}
         countryFieldName="contributorWhatsappCountry"
         nationalFieldName="contributorWhatsappNationalNumber"
         defaultCountry={initial.contributorWhatsappCountry}
@@ -184,7 +186,7 @@ export function ProfileOnboardingForm({ role, initial }: Props) {
         disabled={isPending}
         className="mt-4 w-full rounded-lg bg-slate-900 px-4 py-3 text-sm font-medium text-white hover:bg-slate-800 disabled:opacity-60"
       >
-        Save and continue
+        {t("onboarding.saveContinue")}
       </button>
     </form>
   );

@@ -6,10 +6,12 @@ import {
   addCharityImage,
   type CharityImageFormState,
 } from "@/app/actions/charity-images";
+import { useI18n } from "@/components/i18n-provider";
 import { PhotoCaptureSlot } from "@/components/photo-capture-slot";
 import { compressDonationImageIfNeeded } from "@/lib/donation-item-image-compress";
 
 export function AddPhotoModal() {
+  const { t } = useI18n();
   const [open, setOpen] = useState(false);
   const [state, formAction] = useActionState<CharityImageFormState, FormData>(
     addCharityImage,
@@ -68,12 +70,14 @@ export function AddPhotoModal() {
         onClick={openModal}
         className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-800 hover:bg-slate-50"
       >
-        Add a new photo
+        {t("photos.addOpen")}
       </button>
       {open ? (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
           <div className="mx-auto max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-lg bg-white p-6 shadow-lg">
-            <h2 className="text-lg font-medium text-slate-900">Add a photo</h2>
+            <h2 className="text-lg font-medium text-slate-900">
+              {t("photos.addTitle")}
+            </h2>
             <form onSubmit={handleSubmit} className="mt-4 space-y-4">
               {banner ? (
                 <p className="rounded border border-red-200 bg-red-50 p-3 text-sm text-red-800">
@@ -82,7 +86,7 @@ export function AddPhotoModal() {
               ) : null}
               <PhotoCaptureSlot
                 id="charity-image"
-                label="Image"
+                label={t("photos.image")}
                 file={imageFile}
                 onFileChange={setImageFile}
                 overlayClassName="z-[60]"
@@ -92,7 +96,7 @@ export function AddPhotoModal() {
                   htmlFor="caption"
                   className="text-sm font-medium text-slate-700"
                 >
-                  Caption (max 50 characters)
+                  {t("photos.caption")}
                 </label>
                 <input
                   id="caption"
@@ -108,14 +112,14 @@ export function AddPhotoModal() {
                   onClick={closeModal}
                   className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-800 hover:bg-slate-50"
                 >
-                  Cancel
+                  {t("common.cancel")}
                 </button>
                 <button
                   type="submit"
                   disabled={isPending}
                   className="rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800 disabled:opacity-60"
                 >
-                  {isPending ? "Saving…" : "Save"}
+                  {isPending ? t("photos.saving") : t("photos.save")}
                 </button>
               </div>
             </form>

@@ -10,6 +10,8 @@ const SLIDES = [
   { src: "/welcome-image4.jpeg", alt: "Welcome image 4" },
   { src: "/welcome-image5.jpeg", alt: "Welcome image 5" },
   { src: "/welcome-image6.jpeg", alt: "Welcome image 6" },
+  { src: "/welcome-image7.jpeg", alt: "Welcome image 7" },
+  { src: "/welcome-image8.jpeg", alt: "Welcome image 8" },
 ] as const;
 
 const INTERVAL_MS = 2000;

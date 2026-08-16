@@ -2,27 +2,24 @@
 
 import { useState } from "react";
 
+import { useI18n } from "@/components/i18n-provider";
+
 type Props = {
   url: string;
   title?: string;
   text?: string;
 };
 
-const DEFAULT_TITLE = "Charity Link";
-const DEFAULT_TEXT =
-  "I found Charity Link - a simple way to donate gently used items to local charities helping children in need. Check it out:";
-
-export function ShareWidget({
-  url,
-  title = DEFAULT_TITLE,
-  text = DEFAULT_TEXT,
-}: Props) {
+export function ShareWidget({ url, title, text }: Props) {
+  const { t } = useI18n();
   const [copied, setCopied] = useState(false);
   const [hint, setHint] = useState<string | null>(null);
 
-  const shareBody = `${text}\n\n${url}`;
+  const resolvedTitle = title ?? t("share.defaultTitle");
+  const resolvedText = text ?? t("share.defaultText");
+  const shareBody = `${resolvedText}\n\n${url}`;
   const encodedUrl = encodeURIComponent(url);
-  const encodedTitle = encodeURIComponent(title);
+  const encodedTitle = encodeURIComponent(resolvedTitle);
   const encodedEmailBody = encodeURIComponent(shareBody);
   const encodedWhatsAppText = encodeURIComponent(shareBody);
 
@@ -42,9 +39,7 @@ export function ShareWidget({
       // Clipboard may be blocked; still try opening WhatsApp.
     }
 
-    showHint(
-      "Message copied. If WhatsApp only shows the link, paste in the chat (long-press → Paste).",
-    );
+    showHint(t("share.hintWhatsapp"));
 
     const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
     if (isMobile) {
@@ -61,13 +56,9 @@ export function ShareWidget({
   async function shareInstagram() {
     try {
       await copyShareBody();
-      showHint(
-        "Message copied. Instagram does not allow pre-filled posts from the browser — paste it into a post, story, or DM.",
-      );
+      showHint(t("share.hintInstagram"));
     } catch {
-      showHint(
-        "Could not copy the message. Copy it manually, then open Instagram.",
-      );
+      showHint(t("share.hintInstagramFail"));
     }
 
     const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
@@ -90,10 +81,8 @@ export function ShareWidget({
 
   return (
     <div className="mt-6 rounded-xl border border-slate-200 bg-white p-4">
-      <p className="text-sm font-medium text-slate-900">Share Charity Link</p>
-      <p className="mt-1 text-sm text-slate-600">
-        Invite friends and family to donate with you.
-      </p>
+      <p className="text-sm font-medium text-slate-900">{t("share.title")}</p>
+      <p className="mt-1 text-sm text-slate-600">{t("share.subtitle")}</p>
 
       {hint ? (
         <p className="mt-3 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-950">
@@ -107,14 +96,14 @@ export function ShareWidget({
           onClick={shareWhatsApp}
           className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-800 hover:bg-slate-50"
         >
-          WhatsApp
+          {t("share.whatsapp")}
         </button>
         <button
           type="button"
           onClick={shareInstagram}
           className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-800 hover:bg-slate-50"
         >
-          Instagram
+          {t("share.instagram")}
         </button>
         <a
           href={`https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`}
@@ -122,28 +111,28 @@ export function ShareWidget({
           rel="noopener noreferrer"
           className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-800 hover:bg-slate-50"
         >
-          Facebook
+          {t("share.facebook")}
         </a>
         <a
-          href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(`${text} ${url}`)}`}
+          href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(`${resolvedText} ${url}`)}`}
           target="_blank"
           rel="noopener noreferrer"
           className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-800 hover:bg-slate-50"
         >
-          X
+          {t("share.x")}
         </a>
         <a
           href={`mailto:?subject=${encodedTitle}&body=${encodedEmailBody}`}
           className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-800 hover:bg-slate-50"
         >
-          Email
+          {t("share.email")}
         </a>
         <button
           type="button"
           onClick={copyLink}
           className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-800 hover:bg-slate-50"
         >
-          {copied ? "Copied!" : "Copy message"}
+          {copied ? t("share.copied") : t("share.copy")}
         </button>
       </div>
     </div>

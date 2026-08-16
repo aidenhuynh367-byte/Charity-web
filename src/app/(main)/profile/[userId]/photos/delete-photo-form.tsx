@@ -1,27 +1,35 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+import { useTransition } from "react";
+
 import { deleteCharityImage } from "@/app/actions/charity-images";
+import { useI18n } from "@/components/i18n-provider";
 
 export function DeletePhotoForm({ id }: { id: string }) {
+  const { t } = useI18n();
+  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
+
   return (
     <form
-      action={deleteCharityImage}
       onSubmit={(e) => {
-        if (
-          !window.confirm(
-            "Are you sure you want to delete this photo? This cannot be undone.",
-          )
-        ) {
-          e.preventDefault();
-        }
+        e.preventDefault();
+        if (!window.confirm(t("photos.deleteConfirm"))) return;
+        const fd = new FormData(e.currentTarget);
+        startTransition(async () => {
+          await deleteCharityImage(fd);
+          router.refresh();
+        });
       }}
     >
       <input type="hidden" name="id" value={id} />
       <button
         type="submit"
-        className="text-sm text-red-600 hover:underline"
+        disabled={isPending}
+        className="text-sm text-red-600 hover:underline disabled:opacity-60"
       >
-        Delete
+        {t("photos.delete")}
       </button>
     </form>
   );

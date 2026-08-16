@@ -3,6 +3,9 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { ShareWidget } from "@/components/share-widget";
+import { getDictionary } from "@/i18n/get-dictionary";
+import { getLocale } from "@/i18n/get-locale";
+import { t } from "@/i18n/t";
 import { contributorLabel } from "@/lib/contributor-label";
 import { prisma } from "@/lib/prisma";
 
@@ -10,6 +13,8 @@ type Props = { params: Promise<{ listId: string }> };
 
 export default async function ContributorThankYouSharePage({ params }: Props) {
   const { listId } = await params;
+  const locale = await getLocale();
+  const dict = await getDictionary(locale);
 
   const list = await prisma.donationList.findFirst({
     where: {
@@ -23,7 +28,7 @@ export default async function ContributorThankYouSharePage({ params }: Props) {
   if (!list) notFound();
 
   const name = contributorLabel(list.contributor);
-  const shareText = `You can continue ${name}'s kindness and help those in need. Join TheCharityLink.org`;
+  const shareText = t(dict, "contributorThankYou.shareText", { name });
   const homeUrl = "https://thecharitylink.org";
 
   return (
@@ -32,13 +37,19 @@ export default async function ContributorThankYouSharePage({ params }: Props) {
         href={`/contributor-thank-you/${list.id}`}
         className="text-sm font-medium text-slate-600 hover:text-slate-900"
       >
-        ← Back
+        {t(dict, "contributorThankYou.shareBack")}
       </Link>
-      <h1 className="mt-4 text-2xl font-bold text-slate-900">Share kindness</h1>
+      <h1 className="mt-4 text-2xl font-bold text-slate-900">
+        {t(dict, "contributorThankYou.shareTitle")}
+      </h1>
       <p className="mt-2 text-sm text-slate-600">
-        Share this message with your friends and community.
+        {t(dict, "contributorThankYou.shareSubtitle")}
       </p>
-      <ShareWidget url={homeUrl} title="TheCharityLink.org" text={shareText} />
+      <ShareWidget
+        url={homeUrl}
+        title={t(dict, "brand.name")}
+        text={shareText}
+      />
     </div>
   );
 }

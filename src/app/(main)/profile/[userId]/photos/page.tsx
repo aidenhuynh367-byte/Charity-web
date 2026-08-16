@@ -2,6 +2,9 @@ import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { Role } from "@prisma/client";
 
+import { getDictionary } from "@/i18n/get-dictionary";
+import { getLocale } from "@/i18n/get-locale";
+import { t } from "@/i18n/t";
 import { requireUserId, getOrCreateProfile } from "@/lib/auth-server";
 import { prisma } from "@/lib/prisma";
 
@@ -14,6 +17,8 @@ export default async function CharityPhotosPage({ params }: Props) {
   const { userId: targetUserId } = await params;
   const viewerId = await requireUserId();
   const viewerProfile = await getOrCreateProfile(viewerId);
+  const locale = await getLocale();
+  const dict = await getDictionary(locale);
 
   const target = await prisma.user.findUnique({
     where: { id: targetUserId },
@@ -46,7 +51,7 @@ export default async function CharityPhotosPage({ params }: Props) {
   const charityName =
     target.profile.organizationName?.trim() ||
     target.name?.trim() ||
-    "Charity";
+    t(dict, "photos.fallbackName");
 
   const backHref =
     viewerId === targetUserId ? "/profile" : `/profile/${targetUserId}`;
@@ -59,17 +64,17 @@ export default async function CharityPhotosPage({ params }: Props) {
             href={backHref}
             className="text-sm font-medium text-slate-600 hover:text-slate-900"
           >
-            ← Back
+            {t(dict, "photos.back")}
           </Link>
           <h1 className="mt-4 text-2xl font-bold text-slate-900">
-            {charityName} photos
+            {t(dict, "photos.title", { name: charityName })}
           </h1>
         </div>
         {canManage ? <AddPhotoModal /> : null}
       </div>
 
       {images.length === 0 ? (
-        <p className="mt-10 text-sm text-slate-600">No photos yet.</p>
+        <p className="mt-10 text-sm text-slate-600">{t(dict, "photos.empty")}</p>
       ) : (
         <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {images.map((img) => (
@@ -80,7 +85,7 @@ export default async function CharityPhotosPage({ params }: Props) {
               {/* eslint-disable-next-line @next/next/no-img-element -- user uploads from public/ or GCS */}
               <img
                 src={img.imageUrl}
-                alt={img.caption || "Photo"}
+                alt={img.caption || t(dict, "photos.alt")}
                 className="h-48 w-full object-cover"
               />
               <div className="flex items-start justify-between gap-2 px-3 py-2">

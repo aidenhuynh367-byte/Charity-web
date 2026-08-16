@@ -3,6 +3,7 @@
 import type { FormEvent } from "react";
 import { useEffect, useId, useState } from "react";
 
+import { useI18n } from "@/components/i18n-provider";
 import {
   getSortedCountryDialOptions,
   type CountryDialOption,
@@ -25,6 +26,7 @@ export function PhoneCountryFields({
   defaultNational,
   required,
 }: Props) {
+  const { t } = useI18n();
   const uid = useId();
   const initialCountry = defaultCountry?.trim().toUpperCase() ?? "";
   const initialNational = (defaultNational ?? "").replace(/\D/g, "");
@@ -85,7 +87,7 @@ export function PhoneCountryFields({
           aria-label={`${label}, digits only`}
           onInput={stripNonDigits}
           className="min-w-0 flex-1 rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none ring-slate-400 focus:ring-2"
-          placeholder="Digits only"
+          placeholder={t("profile.digitsPlaceholder")}
         />
       </div>
     </fieldset>

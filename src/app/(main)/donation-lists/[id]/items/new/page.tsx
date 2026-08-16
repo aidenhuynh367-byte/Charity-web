@@ -2,6 +2,9 @@ import { DonationListStatus } from "@prisma/client";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import { getDictionary } from "@/i18n/get-dictionary";
+import { getLocale } from "@/i18n/get-locale";
+import { t } from "@/i18n/t";
 import { requireContributor } from "@/lib/auth-server";
 import { prisma } from "@/lib/prisma";
 
@@ -12,6 +15,8 @@ type Props = { params: Promise<{ id: string }> };
 export default async function NewDonationListItemPage({ params }: Props) {
   const { id } = await params;
   const { userId } = await requireContributor();
+  const locale = await getLocale();
+  const dict = await getDictionary(locale);
 
   const list = await prisma.donationList.findFirst({
     where: { id, contributorId: userId },
@@ -25,14 +30,13 @@ export default async function NewDonationListItemPage({ params }: Props) {
         href={`/donation-lists/${id}`}
         className="text-sm font-medium text-slate-600 hover:text-slate-900"
       >
-        ← Back to list
+        {t(dict, "donationLists.itemBack")}
       </Link>
       <h1 className="mt-4 text-2xl font-bold text-slate-900">
-        Add donation list item
+        {t(dict, "donationLists.addItemTitle")}
       </h1>
       <p className="mt-1 text-sm text-slate-600">
-        Enter a description and at least one image. You will return to your
-        donation list after saving.
+        {t(dict, "donationLists.addItemHelp")}
       </p>
       <NewDonationListItemForm donationListId={id} />
     </main>

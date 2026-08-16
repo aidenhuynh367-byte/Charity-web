@@ -6,7 +6,13 @@ import {
   createDonationListItem,
   type DonationListItemFormState,
 } from "@/app/actions/donation-list-items";
+import {
+  ActionErrorBox,
+  LoadingSpinner,
+} from "@/components/action-feedback";
+import { useI18n } from "@/components/i18n-provider";
 import { PhotoCaptureSlot } from "@/components/photo-capture-slot";
+import { actionError, type ActionFailure } from "@/lib/action-result";
 import { compressDonationImageIfNeeded } from "@/lib/donation-item-image-compress";
 
 type Props = {
@@ -21,11 +27,12 @@ const ALLOWED_IMAGE_TYPES = new Set([
 ]);
 
 export function NewDonationListItemForm({ donationListId }: Props) {
+  const { t } = useI18n();
   const [state, formAction] = useActionState<
     DonationListItemFormState,
     FormData
   >(createDonationListItem, null);
-  const [clientError, setClientError] = useState<string | null>(null);
+  const [clientError, setClientError] = useState<ActionFailure | null>(null);
   const [isPending, startTransition] = useTransition();
   const [image1, setImage1] = useState<File | null>(null);
   const [image2, setImage2] = useState<File | null>(null);
@@ -38,18 +45,30 @@ export function NewDonationListItemForm({ donationListId }: Props) {
     const fdIn = new FormData(form);
     const description = fdIn.get("description");
     if (typeof description !== "string") {
-      setClientError("Description is required.");
+      setClientError(
+        actionError("DESCRIPTION_REQUIRED", "Description is required."),
+      );
       return;
     }
 
     if (!image1 || image1.size === 0) {
-      setClientError("Add at least one image (up to two).");
+      setClientError(
+        actionError(
+          "IMAGES_REQUIRED",
+          "Add at least one image (up to two).",
+        ),
+      );
       return;
     }
     for (const f of [image1, image2]) {
       if (!f || f.size === 0) continue;
       if (!ALLOWED_IMAGE_TYPES.has(f.type)) {
-        setClientError("Images must be JPEG, PNG, WebP, or GIF.");
+        setClientError(
+          actionError(
+            "INVALID_IMAGE_TYPE",
+            "Images must be JPEG, PNG, WebP, or GIF.",
+          ),
+        );
         return;
       }
     }
@@ -73,25 +92,21 @@ export function NewDonationListItemForm({ donationListId }: Props) {
     } catch (err) {
       const msg =
         err instanceof Error ? err.message : "Could not process images.";
-      setClientError(msg);
+      setClientError(actionError("IMAGE_PROCESS_FAILED", msg));
     }
   }
 
-  const banner = clientError ?? state?.error;
+  const banner = clientError ?? state?.error ?? null;
 
   return (
     <form onSubmit={handleSubmit} className="mt-8 max-w-lg space-y-6">
-      {banner ? (
-        <p className="rounded border border-red-200 bg-red-50 p-3 text-sm text-red-800">
-          {banner}
-        </p>
-      ) : null}
+      {banner ? <ActionErrorBox error={banner} /> : null}
       <div className="flex flex-col gap-1">
         <label
           htmlFor="description"
           className="text-sm font-medium text-slate-800"
         >
-          Description
+          {t("donationLists.description")}
         </label>
         <textarea
           id="description"
@@ -100,27 +115,25 @@ export function NewDonationListItemForm({ donationListId }: Props) {
           rows={5}
           maxLength={5000}
           className="rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none ring-slate-400 focus:ring-2"
-          placeholder="Describe this donation item…"
+          placeholder={t("donationLists.descriptionPlaceholder")}
         />
       </div>
       <div className="space-y-4">
         <p className="text-sm font-medium text-slate-800">
-          Images (1 required, up to 2)
+          {t("donationLists.imagesLabel")}
         </p>
         <p className="text-xs text-slate-500">
-          JPEG, PNG, WebP, or GIF. Up to 2.5 MB per file before compression. Any
-          file over 1 MB is resized in your browser to 1 MB or less, then
-          uploaded.
+          {t("donationLists.imagesHelp")}
         </p>
         <PhotoCaptureSlot
           id="image1"
-          label="Image 1"
+          label={t("donationLists.image1")}
           file={image1}
           onFileChange={setImage1}
         />
         <PhotoCaptureSlot
           id="image2"
-          label="Image 2 (optional)"
+          label={t("donationLists.image2")}
           file={image2}
           onFileChange={setImage2}
         />
@@ -130,7 +143,13 @@ export function NewDonationListItemForm({ donationListId }: Props) {
         disabled={isPending}
         className="rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800 disabled:opacity-60"
       >
-        {isPending ? "Processing…" : "Save item"}
+        {isPending ? (
+          <LoadingSpinner
+            label={t("donationLists.processing")}
+          />
+        ) : (
+          t("donationLists.saveItem")
+        )}
       </button>
     </form>
   );
