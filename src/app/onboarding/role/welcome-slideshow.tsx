@@ -4,14 +4,12 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 
 const SLIDES = [
-  { src: "/welcome-image1.jpeg", alt: "Welcome image 1" },
-  { src: "/welcome-image2.jpeg", alt: "Welcome image 2" },
-  { src: "/welcome-image3.jpeg", alt: "Welcome image 3" },
-  { src: "/welcome-image4.jpeg", alt: "Welcome image 4" },
-  { src: "/welcome-image5.jpeg", alt: "Welcome image 5" },
-  { src: "/welcome-image6.jpeg", alt: "Welcome image 6" },
-  { src: "/welcome-image7.jpeg", alt: "Welcome image 7" },
-  { src: "/welcome-image8.jpeg", alt: "Welcome image 8" },
+  { src: "/New HP Image 1.jpeg", alt: "" },
+  { src: "/New HP Image 2.jpeg", alt: "" },
+  { src: "/New HP Image 3.jpeg", alt: "" },
+  { src: "/New HP Image 4.jpeg", alt: "" },
+  { src: "/New HP Image 5.jpeg", alt: "" },
+  { src: "/New HP Image 6.jpeg", alt: "" },
 ] as const;
 
 const INTERVAL_MS = 2000;

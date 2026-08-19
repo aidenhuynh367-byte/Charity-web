@@ -23,6 +23,9 @@ export default async function RootLayout({
     <html lang={locale}>
       <body className="min-h-screen antialiased">
         <I18nProvider locale={locale} dict={dict}>
+          <div className="pointer-events-none fixed left-4 top-4 z-50 text-sm font-medium text-slate-900">
+            Made by Aiden Huynh
+          </div>
           {children}
         </I18nProvider>
       </body>

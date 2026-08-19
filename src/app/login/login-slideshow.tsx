@@ -5,52 +5,28 @@ import { useEffect, useState } from "react";
 
 const SLIDES = [
   {
-    src: "/login-slideshow/01-courtyard.webp",
-    alt: "Balinese orphanage courtyard in Bali",
+    src: "/New HP Image 1.jpeg",
+    alt: "",
   },
   {
-    src: "/login-slideshow/02-study-hall.webp",
-    alt: "Study hall at a children's home in Bali",
+    src: "/New HP Image 2.jpeg",
+    alt: "",
   },
   {
-    src: "/login-slideshow/03-donations.webp",
-    alt: "Donations prepared for children at a Bali orphanage",
+    src: "/New HP Image 3.jpeg",
+    alt: "",
   },
   {
-    src: "/login-slideshow/04-entrance.webp",
-    alt: "Entrance to a Balinese orphanage compound",
+    src: "/New HP Image 4.jpeg",
+    alt: "",
   },
   {
-    src: "/login-slideshow/05-orphans.webp",
-    alt: "Balinese children at a children's home courtyard",
+    src: "/New HP Image 5.jpeg",
+    alt: "",
   },
   {
-    src: "/login-slideshow/06-orphans.webp",
-    alt: "Balinese children reading together",
-  },
-  {
-    src: "/login-slideshow/07-orphans.webp",
-    alt: "Balinese children playing in an orphanage courtyard",
-  },
-  {
-    src: "/login-slideshow/08-orphans.webp",
-    alt: "Balinese children walking to their children's home",
-  },
-  {
-    src: "/login-slideshow/09-orphans.webp",
-    alt: "Balinese children sharing a meal together",
-  },
-  {
-    src: "/login-slideshow/10-orphans.webp",
-    alt: "Balinese children drawing and coloring",
-  },
-  {
-    src: "/login-slideshow/11-orphans.webp",
-    alt: "Balinese children practicing traditional arts",
-  },
-  {
-    src: "/login-slideshow/12-orphans.webp",
-    alt: "Balinese children together at their children's home",
+    src: "/New HP Image 6.jpeg",
+    alt: "",
   },
 ] as const;
 
