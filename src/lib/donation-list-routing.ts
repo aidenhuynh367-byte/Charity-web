@@ -1,12 +1,34 @@
 /**
- * All submitted donation lists are currently routed to the Denpasar charity
- * organization, regardless of contributor location.
+ * Contributor locations routed to the Denpasar charity organization.
+ * All other locations (including missing) go to Kerobokan.
  */
+export const DENPASAR_ROUTE_LOCATIONS = [
+  "Babakan",
+  "Batu Balong",
+  "Berawa",
+  "Cemagi",
+  "Munggu",
+  "Pereranan",
+  "Seseh",
+  "Tanah Lot",
+  "Tumbak Bayuh",
+  "Ubud",
+] as const;
 
-export type RoutedCharityLocation = "Padonon" | "Denpasar";
+export type DenpasarRouteLocation = (typeof DENPASAR_ROUTE_LOCATIONS)[number];
+
+const DENPASAR_ROUTE_SET = new Set<string>(DENPASAR_ROUTE_LOCATIONS);
+
+export type RoutedCharityLocation = "Denpasar" | "Kerobokan";
 
 export function routedCharityLocationForContributor(
-  _contributorLocation: string | null | undefined,
+  contributorLocation: string | null | undefined,
 ): RoutedCharityLocation {
-  return "Denpasar";
+  if (
+    contributorLocation &&
+    DENPASAR_ROUTE_SET.has(contributorLocation)
+  ) {
+    return "Denpasar";
+  }
+  return "Kerobokan";
 }
